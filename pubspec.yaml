@@ -36,6 +36,8 @@ dependencies:
   get: ^4.6.5
   get_storage: ^2.0.3
   carousel_slider: ^4.1.1
+  flutter_social_button: ^1.1.4
+
 
 dev_dependencies:
   flutter_test:
@@ -75,9 +77,9 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-   - family: Nunito
-     fonts:
-       - asset: assets/fonts/Nunito-SemiBold.ttf
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/Nunito-SemiBold.ttf
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:

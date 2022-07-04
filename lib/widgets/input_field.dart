@@ -17,8 +17,14 @@ class InputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final border = OutlineInputBorder(
+      borderRadius: BorderRadius.circular(20),
+      borderSide: const BorderSide(
+        style: BorderStyle.none,
+      ),
+    );
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: SizeConfig.screenHeight * 0.012),
+      padding: EdgeInsets.symmetric(vertical: SizeConfig.screenHeight * 0.01),
       child: TextFormField(
         textAlign: TextAlign.center,
         autocorrect: true,
@@ -28,18 +34,11 @@ class InputField extends StatelessWidget {
         decoration: InputDecoration(
           hintText: hint,
           border: InputBorder.none,
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: const BorderSide(
-              style: BorderStyle.none,
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: const BorderSide(
-              style: BorderStyle.none,
-            ),
-          ),
+          enabledBorder: border,
+          disabledBorder: border,
+          errorBorder: border,
+          focusedErrorBorder: border,
+          focusedBorder: border,
           filled: true,
           fillColor: Theme.of(context).cardColor,
           contentPadding: const EdgeInsets.symmetric(vertical: 20),
