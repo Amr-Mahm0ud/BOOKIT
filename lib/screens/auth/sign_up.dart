@@ -17,7 +17,6 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   final GlobalKey<FormState> _formKey = GlobalKey();
-  bool visible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +39,7 @@ class _SignUpState extends State<SignUp> {
             key: _formKey,
             child: Column(
               children: [
+                //logo
                 Padding(
                   padding: EdgeInsets.symmetric(
                       vertical: SizeConfig.screenHeight * 0.02),
@@ -55,6 +55,7 @@ class _SignUpState extends State<SignUp> {
                     ],
                   ),
                 ),
+                //name
                 InputField(
                   hint: 'User Name',
                   onSave: (val) {
@@ -68,6 +69,7 @@ class _SignUpState extends State<SignUp> {
                   },
                   keyType: TextInputType.name,
                 ),
+                //email
                 InputField(
                   hint: 'Email',
                   onSave: (val) {
@@ -81,6 +83,7 @@ class _SignUpState extends State<SignUp> {
                   },
                   keyType: TextInputType.emailAddress,
                 ),
+                //password
                 InputField(
                   hint: 'Password',
                   onSave: (val) {
@@ -94,6 +97,7 @@ class _SignUpState extends State<SignUp> {
                   },
                   keyType: TextInputType.visiblePassword,
                 ),
+                //phone
                 InputField(
                   hint: 'Phone',
                   onSave: (val) {
@@ -107,6 +111,7 @@ class _SignUpState extends State<SignUp> {
                   },
                   keyType: TextInputType.phone,
                 ),
+                //button
                 Padding(
                   padding: EdgeInsets.symmetric(
                       vertical: SizeConfig.screenHeight * 0.03),
@@ -117,6 +122,7 @@ class _SignUpState extends State<SignUp> {
                     label: 'Register',
                   ),
                 ),
+                //or
                 Row(
                   children: const [
                     Expanded(
@@ -137,6 +143,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ],
                 ),
+                //social buttons
                 Padding(
                   padding: EdgeInsets.symmetric(
                       vertical: SizeConfig.screenHeight * 0.02),

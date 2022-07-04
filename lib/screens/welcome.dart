@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movie_app/screens/auth/sign_in.dart';
 
 import '../constants/size.dart';
 import '../widgets/button.dart';
@@ -63,6 +64,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             }).toList(),
           ),
           Indicator(images: images, index: index),
+          //Logo
           Padding(
             padding:
                 EdgeInsets.symmetric(vertical: SizeConfig.screenHeight * 0.04),
@@ -77,6 +79,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               ],
             ),
           ),
+          //Welcome Text
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Text(
@@ -88,13 +91,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               textAlign: TextAlign.center,
             ),
           ),
+          //Button
           Padding(
             padding: EdgeInsets.all(SizeConfig.screenHeight * 0.04),
             child: Button(
               label: 'Login',
-              onPressed: () {},
+              onPressed: () {
+                Get.to(() => const SignIN());
+              },
             ),
           ),
+          //Register
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

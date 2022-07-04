@@ -27,6 +27,7 @@ class InputField extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: SizeConfig.screenHeight * 0.01),
       child: TextFormField(
         textAlign: TextAlign.center,
+        obscureText: keyType == TextInputType.visiblePassword ? true : false,
         autocorrect: true,
         keyboardType: keyType,
         validator: validator,
