@@ -1,11 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:movie_app/constants/size.dart';
-import 'package:movie_app/screens/auth/sign_up.dart';
-import 'package:movie_app/widgets/button.dart';
-import 'package:movie_app/widgets/indicator.dart';
-import 'package:movie_app/widgets/logo.dart';
+
+import '../constants/size.dart';
+import '../widgets/button.dart';
+import '../widgets/indicator.dart';
+import '../widgets/logo.dart';
+import 'auth/sign_up.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
