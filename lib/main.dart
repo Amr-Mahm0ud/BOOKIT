@@ -20,8 +20,14 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       home: const WelcomeScreen(),
       debugShowCheckedModeBanner: false,
-      theme: Themes.lightTheme,
-      darkTheme: Themes.darkTheme,
+      theme: Themes.lightTheme.copyWith(
+        textTheme: Theme.of(context).textTheme.apply(fontFamily: 'Nunito'),
+      ),
+      darkTheme: Themes.darkTheme.copyWith(
+        textTheme: Theme.of(context).textTheme.apply(
+              fontFamily: 'Nunito',
+            ),
+      ),
       themeMode: ThemeController().theme,
     );
   }
