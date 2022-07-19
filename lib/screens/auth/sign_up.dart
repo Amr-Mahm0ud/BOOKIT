@@ -4,9 +4,10 @@ import 'package:flutter_social_button/flutter_social_button.dart';
 import 'package:get/get.dart';
 import 'package:movie_app/constants/size.dart';
 import 'package:movie_app/widgets/input_field.dart';
-import 'package:movie_app/widgets/logo.dart';
+import 'package:movie_app/widgets/welcome/logo.dart';
 
-import '../../widgets/button.dart';
+import '../../widgets/welcome/button.dart';
+import '../home/main_page.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -118,6 +119,7 @@ class _SignUpState extends State<SignUp> {
                   child: Button(
                     onPressed: () {
                       _formKey.currentState!.validate();
+                      Get.offAll(const MainPage());
                     },
                     label: 'Register',
                   ),

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:movie_app/controllers/home_controller.dart';
 import 'package:movie_app/screens/welcome.dart';
 
 import 'constants/themes.dart';
 import 'controllers/theme_services.dart';
 
 void main() async {
+  Get.put(HomeController());
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   runApp(const MyApp());

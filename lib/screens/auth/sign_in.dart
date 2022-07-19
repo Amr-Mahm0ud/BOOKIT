@@ -3,8 +3,9 @@ import 'package:get/get.dart';
 import 'package:movie_app/widgets/input_field.dart';
 
 import '../../constants/size.dart';
-import '../../widgets/button.dart';
-import '../../widgets/logo.dart';
+import '../../widgets/welcome/button.dart';
+import '../../widgets/welcome/logo.dart';
+import '../home/main_page.dart';
 
 class SignIN extends StatefulWidget {
   const SignIN({Key? key}) : super(key: key);
@@ -20,6 +21,8 @@ class _SignINState extends State<SignIN> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor:
+            Theme.of(context).appBarTheme.backgroundColor!.withOpacity(0.95),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_rounded),
           onPressed: () {
@@ -103,6 +106,7 @@ class _SignINState extends State<SignIN> {
                 Button(
                   onPressed: () {
                     _formKey.currentState!.validate();
+                    Get.offAll(const MainPage());
                   },
                   label: 'Login',
                 ),

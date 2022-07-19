@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:movie_app/screens/auth/sign_in.dart';
 
 import '../constants/size.dart';
-import '../widgets/button.dart';
-import '../widgets/indicator.dart';
-import '../widgets/logo.dart';
+import '../widgets/welcome/button.dart';
+import '../widgets/welcome/indicator.dart';
+import '../widgets/welcome/logo.dart';
 import 'auth/sign_up.dart';
 
 class WelcomeScreen extends StatefulWidget {
