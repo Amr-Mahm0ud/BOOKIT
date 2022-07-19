@@ -39,6 +39,7 @@ dependencies:
   flutter_social_button: ^1.1.4
 
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
