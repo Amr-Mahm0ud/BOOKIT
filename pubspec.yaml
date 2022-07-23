@@ -37,8 +37,8 @@ dependencies:
   get_storage: ^2.0.3
   carousel_slider: ^4.1.1
   flutter_social_button: ^1.1.4
-
-
+  firebase_auth: ^3.5.0
+  firebase_core: ^1.20.0
 
 dev_dependencies:
   flutter_test:
