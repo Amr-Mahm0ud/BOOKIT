@@ -3,11 +3,12 @@ import 'package:flutter_social_button/flutter_social_button.dart';
 
 import 'package:get/get.dart';
 import 'package:movie_app/constants/size.dart';
+import 'package:movie_app/models/user.dart';
 import 'package:movie_app/widgets/input_field.dart';
 import 'package:movie_app/widgets/welcome/logo.dart';
 
+import '../../constants/auth_consts.dart';
 import '../../widgets/welcome/button.dart';
-import '../home/main_page.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -18,6 +19,12 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   final GlobalKey<FormState> _formKey = GlobalKey();
+  UserModel user = UserModel(
+    email: '',
+    name: '',
+    phone: '',
+    password: '',
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +67,7 @@ class _SignUpState extends State<SignUp> {
                 InputField(
                   hint: 'User Name',
                   onSave: (val) {
+                    user.name = val!;
                     return null;
                   },
                   validator: (val) {
@@ -74,6 +82,7 @@ class _SignUpState extends State<SignUp> {
                 InputField(
                   hint: 'Email',
                   onSave: (val) {
+                    user.email = val!;
                     return null;
                   },
                   validator: (val) {
@@ -88,6 +97,7 @@ class _SignUpState extends State<SignUp> {
                 InputField(
                   hint: 'Password',
                   onSave: (val) {
+                    user.password = val!;
                     return null;
                   },
                   validator: (val) {
@@ -102,6 +112,7 @@ class _SignUpState extends State<SignUp> {
                 InputField(
                   hint: 'Phone',
                   onSave: (val) {
+                    user.phone = val!;
                     return null;
                   },
                   validator: (val) {
@@ -118,8 +129,11 @@ class _SignUpState extends State<SignUp> {
                       vertical: SizeConfig.screenHeight * 0.03),
                   child: Button(
                     onPressed: () {
-                      _formKey.currentState!.validate();
-                      Get.offAll(const MainPage());
+                      bool isValid = _formKey.currentState!.validate();
+                      if (isValid) {
+                        _formKey.currentState!.save();
+                        authController.register(user);
+                      }
                     },
                     label: 'Register',
                   ),

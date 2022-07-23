@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movie_app/constants/auth_consts.dart';
 
 import '../../constants/size.dart';
 import '../../controllers/theme_services.dart';
@@ -171,7 +172,9 @@ class MyDrawer extends StatelessWidget {
                 padding: EdgeInsets.all(SizeConfig.screenHeight * 0.04),
                 child: Button(
                   label: 'Logout',
-                  onPressed: () {},
+                  onPressed: () {
+                    authController.signOut();
+                  },
                   border: true,
                 ),
               ),

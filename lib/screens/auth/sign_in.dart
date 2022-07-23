@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movie_app/constants/auth_consts.dart';
 import 'package:movie_app/widgets/input_field.dart';
 
 import '../../constants/size.dart';
 import '../../widgets/welcome/button.dart';
 import '../../widgets/welcome/logo.dart';
-import '../home/main_page.dart';
 
 class SignIN extends StatefulWidget {
   const SignIN({Key? key}) : super(key: key);
@@ -16,6 +16,7 @@ class SignIN extends StatefulWidget {
 
 class _SignINState extends State<SignIN> {
   final GlobalKey<FormState> _formKey = GlobalKey();
+  String _email = '', _password = '';
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +66,7 @@ class _SignINState extends State<SignIN> {
                       return null;
                     },
                     onSave: (val) {
+                      _email = val!;
                       return null;
                     },
                     hint: 'Email'),
@@ -78,6 +80,7 @@ class _SignINState extends State<SignIN> {
                       return null;
                     },
                     onSave: (val) {
+                      _password = val!;
                       return null;
                     },
                     hint: 'Password'),
@@ -105,8 +108,11 @@ class _SignINState extends State<SignIN> {
                 //login
                 Button(
                   onPressed: () {
-                    _formKey.currentState!.validate();
-                    Get.offAll(const MainPage());
+                    bool isValid = _formKey.currentState!.validate();
+                    if (isValid) {
+                      _formKey.currentState!.save();
+                      authController.login(_email, _password);
+                    }
                   },
                   label: 'Login',
                 ),
