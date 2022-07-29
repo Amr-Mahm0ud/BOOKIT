@@ -4,10 +4,11 @@ import 'package:flutter_social_button/flutter_social_button.dart';
 import 'package:get/get.dart';
 import 'package:movie_app/constants/size.dart';
 import 'package:movie_app/models/user.dart';
+import 'package:movie_app/screens/auth/sign_in.dart';
 import 'package:movie_app/widgets/input_field.dart';
 import 'package:movie_app/widgets/welcome/logo.dart';
 
-import '../../constants/auth_consts.dart';
+import '../../constants/consts.dart';
 import '../../widgets/welcome/button.dart';
 
 class SignUp extends StatefulWidget {
@@ -22,7 +23,6 @@ class _SignUpState extends State<SignUp> {
   UserModel user = UserModel(
     email: '',
     name: '',
-    phone: '',
     password: '',
   );
 
@@ -108,21 +108,6 @@ class _SignUpState extends State<SignUp> {
                   },
                   keyType: TextInputType.visiblePassword,
                 ),
-                //phone
-                InputField(
-                  hint: 'Phone',
-                  onSave: (val) {
-                    user.phone = val!;
-                    return null;
-                  },
-                  validator: (val) {
-                    if (val!.isEmpty) {
-                      return 'Phone is required';
-                    }
-                    return null;
-                  },
-                  keyType: TextInputType.phone,
-                ),
                 //button
                 Padding(
                   padding: EdgeInsets.symmetric(
@@ -169,7 +154,9 @@ class _SignUpState extends State<SignUp> {
                       FlutterSocialButton(
                         mini: true,
                         buttonType: ButtonType.google,
-                        onTap: () {},
+                        onTap: () {
+                          authController.signInWithGoogle();
+                        },
                       ),
                       FlutterSocialButton(
                         mini: true,
@@ -183,7 +170,25 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ],
                   ),
-                )
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Already have account ?'),
+                    TextButton(
+                      onPressed: () {
+                        Get.off(() => const SignIN());
+                      },
+                      child: Text(
+                        'Sign In',
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(fontWeight: FontWeight.w900),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

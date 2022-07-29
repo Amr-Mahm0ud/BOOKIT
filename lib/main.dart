@@ -4,7 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:movie_app/controllers/home_controller.dart';
 import 'package:movie_app/widgets/welcome/logo.dart';
 
-import 'constants/auth_consts.dart';
+import 'constants/consts.dart';
 import 'constants/size.dart';
 import 'constants/themes.dart';
 import 'controllers/auth/auth_controller.dart';

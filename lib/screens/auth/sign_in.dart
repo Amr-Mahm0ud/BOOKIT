@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_social_button/flutter_social_button.dart';
 import 'package:get/get.dart';
-import 'package:movie_app/constants/auth_consts.dart';
+import 'package:movie_app/constants/consts.dart';
+import 'package:movie_app/screens/auth/sign_up.dart';
 import 'package:movie_app/widgets/input_field.dart';
 
 import '../../constants/size.dart';
@@ -43,7 +45,7 @@ class _SignINState extends State<SignIN> {
                 //logo
                 Padding(
                   padding: EdgeInsets.symmetric(
-                      vertical: SizeConfig.screenHeight * 0.07),
+                      vertical: SizeConfig.screenHeight * 0.03),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -115,6 +117,74 @@ class _SignINState extends State<SignIN> {
                     }
                   },
                   label: 'Login',
+                ),
+                //or
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      vertical: SizeConfig.screenHeight * 0.03),
+                  child: Row(
+                    children: const [
+                      Expanded(
+                        child: Divider(
+                          color: Colors.grey,
+                          thickness: 1,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text('or SignIn with'),
+                      ),
+                      Expanded(
+                        child: Divider(
+                          color: Colors.grey,
+                          thickness: 1,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                //social buttons
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    FlutterSocialButton(
+                      mini: true,
+                      buttonType: ButtonType.google,
+                      onTap: () {
+                        authController.signInWithGoogle();
+                      },
+                    ),
+                    FlutterSocialButton(
+                      mini: true,
+                      buttonType: ButtonType.facebook,
+                      onTap: () {},
+                    ),
+                    FlutterSocialButton(
+                      mini: true,
+                      buttonType: ButtonType.apple,
+                      onTap: () {},
+                    ),
+                  ],
+                ),
+                //register
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('New user?'),
+                    TextButton(
+                      onPressed: () {
+                        Get.off(() => const SignUp());
+                      },
+                      child: Text(
+                        'Register here',
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(fontWeight: FontWeight.w900),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

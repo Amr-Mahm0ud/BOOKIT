@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:movie_app/constants/auth_consts.dart';
+import 'package:movie_app/constants/consts.dart';
 
 import '../../constants/size.dart';
 import '../../controllers/theme_services.dart';
