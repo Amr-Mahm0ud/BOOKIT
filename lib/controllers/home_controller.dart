@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:movie_app/controllers/db/tmdb_controller.dart';
 
 class HomeController extends GetxController {
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  void openDrawer() {
+  openDrawer() {
     scaffoldKey.currentState!.openDrawer();
   }
 
-  RxInt currentPage = RxInt(0);
+  @override
+  void onInit() {
+    Get.put(TMDBController());
+    super.onInit();
+  }
 
-  void selectPage(int index) {
-    if (index == 0) {
-      currentPage.value = index;
-    } else if (index == 1) {
-      currentPage.value = index;
-    } else if (index == 2) {
-      currentPage.value = index;
-    }
+  final RxInt _currentPage = 0.obs;
+
+  set setPage(int index) => _currentPage.value = index;
+  get currentPage => _currentPage;
+  onTapped(int index) {
+    currentPage(index);
+    update();
   }
 }
