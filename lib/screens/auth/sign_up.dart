@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_social_button/flutter_social_button.dart';
 
 import 'package:get/get.dart';
-import 'package:movie_app/constants/size.dart';
 import 'package:movie_app/models/user.dart';
 import 'package:movie_app/screens/auth/sign_in.dart';
 import 'package:movie_app/widgets/input_field.dart';
@@ -41,7 +40,7 @@ class _SignUpState extends State<SignUp> {
         physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: SizeConfig.screenWidth * 0.1,
+            horizontal: Get.width * 0.1,
           ),
           child: Form(
             key: _formKey,
@@ -49,12 +48,11 @@ class _SignUpState extends State<SignUp> {
               children: [
                 //logo
                 Padding(
-                  padding: EdgeInsets.symmetric(
-                      vertical: SizeConfig.screenHeight * 0.02),
+                  padding: EdgeInsets.symmetric(vertical: Get.height * 0.02),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Logo(size: SizeConfig.screenWidth * 0.07),
+                      Logo(size: Get.width * 0.07),
                       const SizedBox(width: 15),
                       Text(
                         'BOOKIT',
@@ -110,8 +108,7 @@ class _SignUpState extends State<SignUp> {
                 ),
                 //button
                 Padding(
-                  padding: EdgeInsets.symmetric(
-                      vertical: SizeConfig.screenHeight * 0.03),
+                  padding: EdgeInsets.symmetric(vertical: Get.height * 0.03),
                   child: Button(
                     onPressed: () {
                       bool isValid = _formKey.currentState!.validate();
@@ -146,8 +143,7 @@ class _SignUpState extends State<SignUp> {
                 ),
                 //social buttons
                 Padding(
-                  padding: EdgeInsets.symmetric(
-                      vertical: SizeConfig.screenHeight * 0.02),
+                  padding: EdgeInsets.symmetric(vertical: Get.height * 0.02),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [

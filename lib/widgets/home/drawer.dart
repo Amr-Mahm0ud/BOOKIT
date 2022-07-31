@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_app/constants/consts.dart';
 
-import '../../constants/size.dart';
 import '../../controllers/theme_services.dart';
 import '../welcome/button.dart';
 
@@ -13,7 +12,7 @@ class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      width: SizeConfig.screenWidth,
+      width: Get.width,
       backgroundColor: Theme.of(context).primaryColor,
       child: SafeArea(
         child: Padding(
@@ -24,7 +23,7 @@ class MyDrawer extends StatelessWidget {
                 children: [
                   const Spacer(flex: 3),
                   CircleAvatar(
-                    radius: SizeConfig.screenWidth * 0.075,
+                    radius: Get.width * 0.075,
                     backgroundImage: const AssetImage('assets/images/1.jpg'),
                   ),
                   const Spacer(flex: 2),
@@ -48,8 +47,8 @@ class MyDrawer extends StatelessWidget {
                   ),
                   const Spacer(flex: 10),
                   SizedBox(
-                    width: SizeConfig.screenWidth * 0.15,
-                    height: SizeConfig.screenHeight * 0.085,
+                    width: Get.width * 0.15,
+                    height: Get.height * 0.085,
                     child: Card(
                       margin: const EdgeInsets.symmetric(horizontal: 0),
                       elevation: 10,
@@ -58,15 +57,15 @@ class MyDrawer extends StatelessWidget {
                           Theme.of(context).primaryColor.withOpacity(0.3),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(SizeConfig.screenWidth),
-                          bottomLeft: Radius.circular(SizeConfig.screenWidth),
+                          topLeft: Radius.circular(Get.width),
+                          bottomLeft: Radius.circular(Get.width),
                         ),
                       ),
                       child: IconButton(
                         icon: Image.asset(
                           'assets/images/menur.png',
                           color: Theme.of(context).primaryColor,
-                          width: SizeConfig.screenWidth * 0.1,
+                          width: Get.width * 0.1,
                         ),
                         onPressed: () {
                           Get.back();
@@ -76,18 +75,18 @@ class MyDrawer extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: SizeConfig.screenHeight * 0.08),
+              SizedBox(height: Get.height * 0.08),
               ListTile(
                 contentPadding: EdgeInsets.symmetric(
-                  vertical: SizeConfig.screenHeight * 0.01,
-                  horizontal: SizeConfig.screenWidth * 0.1,
+                  vertical: Get.height * 0.01,
+                  horizontal: Get.width * 0.1,
                 ),
                 leading: RotationTransition(
                   turns: const AlwaysStoppedAnimation(90 / 360),
                   child: Icon(
                     Icons.local_movies_outlined,
                     color: Colors.white,
-                    size: SizeConfig.screenWidth * 0.08,
+                    size: Get.width * 0.08,
                   ),
                 ),
                 title: Text(
@@ -106,13 +105,13 @@ class MyDrawer extends StatelessWidget {
               ),
               ListTile(
                 contentPadding: EdgeInsets.symmetric(
-                  vertical: SizeConfig.screenHeight * 0.01,
-                  horizontal: SizeConfig.screenWidth * 0.1,
+                  vertical: Get.height * 0.01,
+                  horizontal: Get.width * 0.1,
                 ),
                 leading: Icon(
                   Icons.settings,
                   color: Colors.white,
-                  size: SizeConfig.screenWidth * 0.08,
+                  size: Get.width * 0.08,
                 ),
                 title: Text(
                   'Settings',
@@ -125,13 +124,13 @@ class MyDrawer extends StatelessWidget {
               ),
               ListTile(
                 contentPadding: EdgeInsets.symmetric(
-                  vertical: SizeConfig.screenHeight * 0.01,
-                  horizontal: SizeConfig.screenWidth * 0.1,
+                  vertical: Get.height * 0.01,
+                  horizontal: Get.width * 0.1,
                 ),
                 leading: Icon(
                   Icons.support_agent_rounded,
                   color: Colors.white,
-                  size: SizeConfig.screenWidth * 0.08,
+                  size: Get.width * 0.08,
                 ),
                 title: Text(
                   'Customer Support',
@@ -144,13 +143,13 @@ class MyDrawer extends StatelessWidget {
               ),
               ListTile(
                 contentPadding: EdgeInsets.symmetric(
-                  vertical: SizeConfig.screenHeight * 0.01,
-                  horizontal: SizeConfig.screenWidth * 0.1,
+                  vertical: Get.height * 0.01,
+                  horizontal: Get.width * 0.1,
                 ),
                 leading: Icon(
                   Icons.dark_mode,
                   color: Colors.white,
-                  size: SizeConfig.screenWidth * 0.08,
+                  size: Get.width * 0.08,
                 ),
                 title: Text(
                   'DarkTheme',
@@ -159,17 +158,17 @@ class MyDrawer extends StatelessWidget {
                       .titleLarge!
                       .copyWith(color: Colors.white),
                 ),
-                onTap: () {
-                  ThemeController().switchTheme();
-                },
+                onTap: () {},
                 trailing: CupertinoSwitch(
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    ThemeController().switchTheme();
+                  },
                   value: Get.isDarkMode,
                 ),
               ),
               const Spacer(),
               Padding(
-                padding: EdgeInsets.all(SizeConfig.screenHeight * 0.04),
+                padding: EdgeInsets.all(Get.height * 0.04),
                 child: Button(
                   label: 'Logout',
                   onPressed: () {

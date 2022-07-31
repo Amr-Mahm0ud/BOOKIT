@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/constants/size.dart';
+import 'package:get/get.dart';
 
 class Button extends StatelessWidget {
   final String label;
@@ -19,8 +19,7 @@ class Button extends StatelessWidget {
       style: border
           ? OutlinedButton.styleFrom(
               elevation: 0,
-              fixedSize:
-                  Size(SizeConfig.screenWidth, SizeConfig.screenHeight * 0.075),
+              fixedSize: Size(Get.width, Get.height * 0.075),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
                   side: const BorderSide(
@@ -29,8 +28,7 @@ class Button extends StatelessWidget {
             )
           : ElevatedButton.styleFrom(
               elevation: 15,
-              fixedSize:
-                  Size(SizeConfig.screenWidth, SizeConfig.screenHeight * 0.075),
+              fixedSize: Size(Get.width, Get.height * 0.075),
               shadowColor: Theme.of(context).primaryColor.withOpacity(0.5),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),

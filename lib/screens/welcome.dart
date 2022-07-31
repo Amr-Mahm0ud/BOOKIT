@@ -2,8 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_app/screens/auth/sign_in.dart';
-
-import '../constants/size.dart';
 import '../widgets/welcome/button.dart';
 import '../widgets/welcome/indicator.dart';
 import '../widgets/welcome/logo.dart';
@@ -34,7 +32,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           CarouselSlider(
             options: CarouselOptions(
               autoPlayAnimationDuration: const Duration(milliseconds: 300),
-              height: SizeConfig.screenHeight * 0.35,
+              height: Get.height * 0.35,
               autoPlay: true,
               viewportFraction: 1,
               enableInfiniteScroll: true,
@@ -48,7 +46,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               return Builder(
                 builder: (BuildContext context) {
                   return Container(
-                    width: SizeConfig.screenWidth,
+                    width: Get.width,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(
@@ -65,11 +63,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           Indicator(images: images, index: index),
           //Logo
           Padding(
-            padding:
-                EdgeInsets.symmetric(vertical: SizeConfig.screenHeight * 0.04),
+            padding: EdgeInsets.symmetric(vertical: Get.height * 0.04),
             child: Column(
               children: [
-                Logo(size: SizeConfig.screenWidth * 0.13),
+                Logo(size: Get.width * 0.13),
                 const SizedBox(height: 5),
                 Text(
                   'BOOKIT',
@@ -92,7 +89,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           ),
           //Button
           Padding(
-            padding: EdgeInsets.all(SizeConfig.screenHeight * 0.04),
+            padding: EdgeInsets.all(Get.height * 0.04),
             child: Button(
               label: 'Login',
               onPressed: () {

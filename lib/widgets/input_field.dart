@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/constants/size.dart';
+import 'package:get/get.dart';
 
 class InputField extends StatelessWidget {
   final TextInputType keyType;
@@ -24,7 +24,7 @@ class InputField extends StatelessWidget {
       ),
     );
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: SizeConfig.screenHeight * 0.01),
+      padding: EdgeInsets.symmetric(vertical: Get.height * 0.01),
       child: TextFormField(
         textAlign: TextAlign.center,
         obscureText: keyType == TextInputType.visiblePassword ? true : false,

@@ -5,7 +5,6 @@ import 'package:movie_app/constants/consts.dart';
 import 'package:movie_app/screens/auth/sign_up.dart';
 import 'package:movie_app/widgets/input_field.dart';
 
-import '../../constants/size.dart';
 import '../../widgets/welcome/button.dart';
 import '../../widgets/welcome/logo.dart';
 
@@ -36,20 +35,18 @@ class _SignINState extends State<SignIN> {
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: SizeConfig.screenWidth * 0.1),
+          padding: EdgeInsets.symmetric(horizontal: Get.width * 0.1),
           child: Form(
             key: _formKey,
             child: Column(
               children: [
                 //logo
                 Padding(
-                  padding: EdgeInsets.symmetric(
-                      vertical: SizeConfig.screenHeight * 0.03),
+                  padding: EdgeInsets.symmetric(vertical: Get.height * 0.03),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Logo(size: SizeConfig.screenWidth * 0.07),
+                      Logo(size: Get.width * 0.07),
                       const SizedBox(width: 15),
                       Text(
                         'BOOKIT',
@@ -88,8 +85,7 @@ class _SignINState extends State<SignIN> {
                     hint: 'Password'),
                 //forgot password
                 Padding(
-                  padding: EdgeInsets.symmetric(
-                      vertical: SizeConfig.screenHeight * 0.025),
+                  padding: EdgeInsets.symmetric(vertical: Get.height * 0.025),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -120,8 +116,7 @@ class _SignINState extends State<SignIN> {
                 ),
                 //or
                 Padding(
-                  padding: EdgeInsets.symmetric(
-                      vertical: SizeConfig.screenHeight * 0.03),
+                  padding: EdgeInsets.symmetric(vertical: Get.height * 0.03),
                   child: Row(
                     children: const [
                       Expanded(
