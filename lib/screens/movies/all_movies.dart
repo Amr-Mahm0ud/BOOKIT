@@ -7,7 +7,8 @@ import '../../widgets/movie/film_tile.dart';
 class AllMovies extends GetView<TMDBController> {
   final bool asWidget;
   final String? title;
-  const AllMovies({Key? key, required this.asWidget, this.title})
+  final int? genreId;
+  const AllMovies({Key? key, required this.asWidget, this.title, this.genreId})
       : super(key: key);
 
   @override
@@ -33,20 +34,46 @@ class AllMovies extends GetView<TMDBController> {
                     Get.back();
                   }),
             ),
-            body: ListView.separated(
-                physics: const BouncingScrollPhysics(),
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return FilmTile(
-                      movie: TMDBController.switchSection(title, controller)
-                          .movies![index]);
-                },
-                separatorBuilder: (_, index) {
-                  return const Divider();
-                },
-                itemCount: TMDBController.switchSection(title, controller)
-                    .movies!
-                    .length),
+            body: genreId != null
+                ? ListView.separated(
+                    physics: const BouncingScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return FilmTile(
+                          movie: TMDBController.switchSection(title, controller)
+                              .movies!
+                              .where(
+                                (element) =>
+                                    element.genreIds!.contains(genreId),
+                              )
+                              .toList()[index]);
+                    },
+                    separatorBuilder: (_, index) {
+                      return const Divider();
+                    },
+                    itemCount: TMDBController.switchSection(title, controller)
+                        .movies!
+                        .where(
+                          (element) => element.genreIds!.contains(
+                            genreId,
+                          ),
+                        )
+                        .length)
+                : ListView.separated(
+                    physics: const BouncingScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return FilmTile(
+                          movie: TMDBController.switchSection(title, controller)
+                              .movies![index]);
+                    },
+                    separatorBuilder: (_, index) {
+                      return const Divider();
+                    },
+                    itemCount: TMDBController.switchSection(title, controller)
+                        .movies!
+                        .length,
+                  ),
           );
   }
 }

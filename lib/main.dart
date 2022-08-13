@@ -26,25 +26,34 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Logo(size: Get.width * 0.13),
-              const SizedBox(height: 5),
-              Text(
-                'BOOKIT',
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-            ],
-          ),
-        ),
-      ),
       debugShowCheckedModeBanner: false,
       theme: Themes.lightTheme,
       darkTheme: Themes.darkTheme,
       themeMode: ThemeController().theme,
+      home: const SplashScreen(),
+    );
+  }
+}
+
+class SplashScreen extends StatelessWidget {
+  const SplashScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Logo(size: Get.width * 0.13),
+            const SizedBox(height: 5),
+            Text(
+              'BOOKIT',
+              style: Get.theme.textTheme.headlineSmall,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

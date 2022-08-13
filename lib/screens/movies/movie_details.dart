@@ -44,7 +44,7 @@ class MovieDetails extends GetView<TMDBController> {
                       ),
                       //back button
                       Align(
-                        alignment: const Alignment(-0.9, -0.675),
+                        alignment: const Alignment(-0.9, -0.65),
                         child: CircleAvatar(
                           backgroundColor:
                               Get.theme.primaryColor.withOpacity(0.7),
@@ -68,7 +68,7 @@ class MovieDetails extends GetView<TMDBController> {
                           child: Text(
                             controller.movie.value.title.toString(),
                             style: Get.textTheme.headline4!
-                                .copyWith(color: Colors.black),
+                                .copyWith(color: Get.theme.iconTheme.color),
                           ),
                         ),
                       ),
@@ -110,6 +110,7 @@ class MovieDetails extends GetView<TMDBController> {
                           image: DecorationImage(
                             image: NetworkImage(
                                 controller.movie.value.backdropPath!),
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
@@ -146,8 +147,11 @@ class MovieDetails extends GetView<TMDBController> {
                       ),
                       //overview
                       Text('Overview', style: Get.textTheme.headline5),
-                      Text(controller.movie.value.overview.toString(),
-                          style: Get.textTheme.titleMedium),
+                      Text(
+                        controller.movie.value.overview.toString(),
+                        style: Get.textTheme.titleMedium,
+                        
+                      ),
                       const SizedBox(height: 10),
                       //com, countries & langs
                       buildInfo(

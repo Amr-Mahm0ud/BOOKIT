@@ -4,7 +4,7 @@ const Color primaryClr = Color(0xff2DA8FF);
 const Color secondaryClr = Color(0xffB06AB3);
 const Color backLight = Color(0xFFF5F5F5);
 const Color backDark = Color(0xFF000000);
-const Color grayShade = Color(0xFF2D2D2D);
+const Color grayShade = Color(0xFF323232);
 const Color white = Color(0xFFFFFFFF);
 
 class Themes {

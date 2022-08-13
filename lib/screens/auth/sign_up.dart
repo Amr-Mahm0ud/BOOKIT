@@ -24,6 +24,7 @@ class _SignUpState extends State<SignUp> {
     name: '',
     password: '',
   );
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -111,13 +112,19 @@ class _SignUpState extends State<SignUp> {
                   padding: EdgeInsets.symmetric(vertical: Get.height * 0.03),
                   child: Button(
                     onPressed: () {
+                      setState(() {
+                        isLoading = true;
+                      });
                       bool isValid = _formKey.currentState!.validate();
                       if (isValid) {
                         _formKey.currentState!.save();
                         authController.register(user);
                       }
+                      setState(() {
+                        isLoading = false;
+                      });
                     },
-                    label: 'Register',
+                    label: isLoading ? 'Loading' : 'Register',
                   ),
                 ),
                 //or

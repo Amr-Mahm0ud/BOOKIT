@@ -18,6 +18,7 @@ class SignIN extends StatefulWidget {
 class _SignINState extends State<SignIN> {
   final GlobalKey<FormState> _formKey = GlobalKey();
   String _email = '', _password = '';
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -106,13 +107,19 @@ class _SignINState extends State<SignIN> {
                 //login
                 Button(
                   onPressed: () {
+                    setState(() {
+                      isLoading = true;
+                    });
                     bool isValid = _formKey.currentState!.validate();
                     if (isValid) {
                       _formKey.currentState!.save();
                       authController.login(_email, _password);
                     }
+                    setState(() {
+                      isLoading = false;
+                    });
                   },
-                  label: 'Login',
+                  label: isLoading ? 'Loading...' : 'Login',
                 ),
                 //or
                 Padding(

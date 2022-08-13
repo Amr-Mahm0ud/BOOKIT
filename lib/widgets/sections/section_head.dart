@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../screens/movies/all_movies.dart';
+import '../../screens/movies/all_movies.dart';
 
 class SectionHead extends StatelessWidget {
   final String title;

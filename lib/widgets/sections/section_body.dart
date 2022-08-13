@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_app/controllers/db/tmdb_controller.dart';
 
-import 'movie/film_card.dart';
+import '../movie/film_card.dart';
 
 class SectionBody extends GetView<TMDBController> {
   final String sectionName;
