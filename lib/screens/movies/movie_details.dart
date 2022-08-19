@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_app/controllers/db/tmdb_controller.dart';
+import 'package:movie_app/screens/booking/booking.dart';
+import 'package:movie_app/widgets/welcome/button.dart';
 
 class MovieDetails extends GetView<TMDBController> {
   final int movieID;
@@ -75,7 +77,7 @@ class MovieDetails extends GetView<TMDBController> {
                     ],
                   ),
                 ),
-                //tagline, date, votes, rate, backdrop, genres, overview, com, countries & langs, cast, crew
+                //tagline, date, votes, rate, backdrop, genres, overview, com, countries & langs
                 Padding(
                   padding: EdgeInsets.symmetric(
                     vertical: Get.width * 0.025,
@@ -150,7 +152,6 @@ class MovieDetails extends GetView<TMDBController> {
                       Text(
                         controller.movie.value.overview.toString(),
                         style: Get.textTheme.titleMedium,
-                        
                       ),
                       const SizedBox(height: 10),
                       //com, countries & langs
@@ -166,6 +167,17 @@ class MovieDetails extends GetView<TMDBController> {
                         'Languages',
                         controller.movie.value.languages!,
                       ),
+                      Padding(
+                        padding:
+                            EdgeInsets.symmetric(vertical: Get.height * 0.025),
+                        child: Button(
+                          label: 'Book IT',
+                          onPressed: () {
+                            Get.to(() =>
+                                BookingScreen(movie: controller.movie.value));
+                          },
+                        ),
+                      )
                     ],
                   ),
                 ),

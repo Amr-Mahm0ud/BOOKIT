@@ -23,6 +23,9 @@ class FilmCard extends StatelessWidget {
           children: [
             Material(
               elevation: 15,
+              shadowColor: Get.isDarkMode
+                  ? Get.theme.primaryColor.withOpacity(0.4)
+                  : Get.theme.shadowColor,
               borderRadius: BorderRadius.circular(15),
               child: Container(
                 width: Get.width * 0.38,

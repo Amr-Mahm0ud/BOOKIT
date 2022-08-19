@@ -27,96 +27,98 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          CarouselSlider(
-            options: CarouselOptions(
-              autoPlayAnimationDuration: const Duration(milliseconds: 300),
-              height: Get.height * 0.35,
-              autoPlay: true,
-              viewportFraction: 1,
-              enableInfiniteScroll: true,
-              onPageChanged: (i, _) {
-                setState(() {
-                  index = i;
-                });
-              },
-            ),
-            items: images.map((image) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Container(
-                    width: Get.width,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(
-                          image,
-                        ),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  );
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            CarouselSlider(
+              options: CarouselOptions(
+                autoPlayAnimationDuration: const Duration(milliseconds: 300),
+                height: Get.height * 0.35,
+                autoPlay: true,
+                viewportFraction: 1,
+                enableInfiniteScroll: true,
+                onPageChanged: (i, _) {
+                  setState(() {
+                    index = i;
+                  });
                 },
-              );
-            }).toList(),
-          ),
-          Indicator(images: images, index: index),
-          //Logo
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: Get.height * 0.04),
-            child: Column(
+              ),
+              items: images.map((image) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return Container(
+                      width: Get.width,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                            image,
+                          ),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }).toList(),
+            ),
+            Indicator(images: images, index: index),
+            //Logo
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: Get.height * 0.04),
+              child: Column(
+                children: [
+                  Logo(size: Get.width * 0.13),
+                  const SizedBox(height: 5),
+                  Text(
+                    'BOOKIT',
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                ],
+              ),
+            ),
+            //Welcome Text
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Text(
+                'Enjoy best movies, events or activities via BOOKIT.',
+                style: Theme.of(context)
+                    .textTheme
+                    .headline6!
+                    .copyWith(color: Colors.grey[700]),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            //Button
+            Padding(
+              padding: EdgeInsets.all(Get.height * 0.04),
+              child: Button(
+                label: 'Login',
+                onPressed: () {
+                  Get.to(() => const SignIN());
+                },
+              ),
+            ),
+            //Register
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Logo(size: Get.width * 0.13),
-                const SizedBox(height: 5),
-                Text(
-                  'BOOKIT',
-                  style: Theme.of(context).textTheme.headlineSmall,
+                const Text('New user?'),
+                TextButton(
+                  onPressed: () {
+                    Get.to(() => const SignUp());
+                  },
+                  child: Text(
+                    'Register here',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(fontWeight: FontWeight.w900),
+                  ),
                 ),
               ],
             ),
-          ),
-          //Welcome Text
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Text(
-              'Enjoy best movies, events or activities via BOOKIT.',
-              style: Theme.of(context)
-                  .textTheme
-                  .headline6!
-                  .copyWith(color: Colors.grey[700]),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          //Button
-          Padding(
-            padding: EdgeInsets.all(Get.height * 0.04),
-            child: Button(
-              label: 'Login',
-              onPressed: () {
-                Get.to(() => const SignIN());
-              },
-            ),
-          ),
-          //Register
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text('New user?'),
-              TextButton(
-                onPressed: () {
-                  Get.to(() => const SignUp());
-                },
-                child: Text(
-                  'Register here',
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleMedium!
-                      .copyWith(fontWeight: FontWeight.w900),
-                ),
-              ),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

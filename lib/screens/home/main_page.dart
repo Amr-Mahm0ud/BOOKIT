@@ -7,16 +7,20 @@ import 'categories.dart';
 import '/widgets/home/bottom_nav.dart';
 import '/widgets/home/drawer.dart';
 
-import '/controllers/home_controller.dart';
+import '../../controllers/home/home_controller.dart';
 import 'favorites.dart';
 
 class MainPage extends StatelessWidget {
-  const MainPage({Key? key}) : super(key: key);
+  MainPage({Key? key}) : super(key: key);
+
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeController>(builder: (controller) {
-      return Scaffold(
+    final controller = Get.find<HomeController>();
+
+    return Obx(
+      () => Scaffold(
         appBar: controller.currentPage != 0
             ? AppBar(
                 title: Text(
@@ -24,19 +28,15 @@ class MainPage extends StatelessWidget {
               )
             : null,
         extendBody: true,
-        key: controller.scaffoldKey,
-        body: controller.currentPage.value == 0
-            ? buildHomeBody(context, controller)
-            : controller.currentPage.value == 1
-                ? Categories()
-                : const Favorites(),
+        key: scaffoldKey,
+        body: switchBody(),
         drawer: controller.currentPage.value == 0 ? const MyDrawer() : null,
         bottomNavigationBar: BottomNavBar(
           currentIndex: controller.currentPage.value,
           onTap: controller.onTapped,
         ),
-      );
-    });
+      ),
+    );
   }
 
   SizedBox drawerIcon(controller) {
@@ -61,14 +61,14 @@ class MainPage extends StatelessWidget {
             width: Get.width * 0.1,
           ),
           onPressed: () {
-            controller.openDrawer();
+            controller.openDrawer(scaffoldKey);
           },
         ),
       ),
     );
   }
 
-  Expanded searchBar(context) {
+  Expanded searchBar() {
     final border = OutlineInputBorder(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(Get.width),
@@ -105,7 +105,7 @@ class MainPage extends StatelessWidget {
             focusedErrorBorder: border,
             focusedBorder: border,
             filled: true,
-            fillColor: Theme.of(context).cardColor,
+            fillColor: Get.theme.cardTheme.color,
           ),
         ),
       ),
@@ -122,7 +122,7 @@ class MainPage extends StatelessWidget {
               //drawer & search bar
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [drawerIcon(controller), searchBar(context)],
+                children: [drawerIcon(controller), searchBar()],
               ),
               SizedBox(height: Get.height * 0.015),
               const SectionHead(title: 'Trending'),
@@ -136,5 +136,18 @@ class MainPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  switchBody() {
+    switch (Get.find<HomeController>().currentPage.value) {
+      case 0:
+        return buildHomeBody(Get.context, Get.find<HomeController>());
+      case 1:
+        return Categories();
+      case 2:
+        return const Favorites();
+      default:
+        return buildHomeBody(Get.context, Get.find<HomeController>());
+    }
   }
 }

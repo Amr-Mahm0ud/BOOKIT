@@ -4,8 +4,11 @@
         "BOOKIT",
         "consts",
         "firestore",
+        "IMAX",
+        "Laemmle",
         "menur",
         "Nunito",
+        "qrcode",
         "Srgb",
         "TMDB"
     ]

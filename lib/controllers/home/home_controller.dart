@@ -1,11 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_app/controllers/db/tmdb_controller.dart';
 
 class HomeController extends GetxController {
-  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
-  openDrawer() {
+  openDrawer(scaffoldKey) {
     scaffoldKey.currentState!.openDrawer();
   }
 

@@ -10,8 +10,9 @@ import '../../constants/consts.dart';
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
-  late Rx<User?> firebaseUser;
-  late Rx<GoogleSignInAccount?> googleSignInAccount;
+  static Rx<User?> firebaseUser = Rx<User?>(auth.currentUser);
+  static Rx<GoogleSignInAccount?> googleSignInAccount =
+      Rx<GoogleSignInAccount?>(googleSign.currentUser);
 
   @override
   void onReady() {
@@ -36,7 +37,7 @@ class AuthController extends GetxController {
           .get()
           .then((value) {
         if (value.exists) {
-          Get.offAll(() => const MainPage());
+          Get.offAll(() => MainPage());
         }
       });
     }
@@ -52,7 +53,7 @@ class AuthController extends GetxController {
           .get()
           .then((value) {
         if (value.exists) {
-          Get.offAll(() => const MainPage());
+          Get.offAll(() => MainPage());
         }
       });
     }

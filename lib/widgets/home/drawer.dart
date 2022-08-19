@@ -2,8 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_app/constants/consts.dart';
+import 'package:movie_app/controllers/booking_controller.dart';
 
-import '../../controllers/theme_services.dart';
+import '../../controllers/auth/auth_controller.dart';
+import '../../controllers/home/theme_services.dart';
+import '../../models/user.dart';
+import '../../screens/booking/my_booking.dart';
 import '../welcome/button.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -11,6 +15,7 @@ class MyDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserModel user = getUserData();
     return Drawer(
       width: Get.width,
       backgroundColor: Theme.of(context).primaryColor,
@@ -23,22 +28,31 @@ class MyDrawer extends StatelessWidget {
                 children: [
                   const Spacer(flex: 3),
                   CircleAvatar(
-                    radius: Get.width * 0.075,
-                    backgroundImage: const AssetImage('assets/images/1.jpg'),
-                  ),
+                      radius: Get.width * 0.075,
+                      backgroundImage: user.photoUrl != ''
+                          ? NetworkImage(
+                              user.photoUrl!,
+                            )
+                          : null,
+                      child: user.photoUrl == ''
+                          ? Icon(
+                              Icons.person_rounded,
+                              size: Get.width * 0.1,
+                            )
+                          : null),
                   const Spacer(flex: 2),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Welcome Amr',
+                        user.name,
                         style: Theme.of(context)
                             .textTheme
                             .titleLarge!
                             .copyWith(color: Colors.white),
                       ),
                       Text(
-                        'Edit your profile',
+                        user.email,
                         style: Theme.of(context).textTheme.subtitle2!.copyWith(
                             color: Colors.white70,
                             fontWeight: FontWeight.normal),
@@ -69,6 +83,7 @@ class MyDrawer extends StatelessWidget {
                         ),
                         onPressed: () {
                           Get.back();
+                          Get.delete<BookingController>();
                         },
                       ),
                     ),
@@ -101,7 +116,10 @@ class MyDrawer extends StatelessWidget {
                   backgroundColor: Colors.white,
                   child: Text('1'),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Get.put(BookingController());
+                  Get.to(() => const MyBooking());
+                },
               ),
               ListTile(
                 contentPadding: EdgeInsets.symmetric(
@@ -182,5 +200,24 @@ class MyDrawer extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  UserModel getUserData() {
+    if (AuthController.firebaseUser.value != null) {
+      var name = AuthController.firebaseUser.value!.displayName;
+      return UserModel(
+        name: name == null || name == ''
+            ? AuthController.firebaseUser.value!.email!.split('@')[0]
+            : AuthController.firebaseUser.value!.displayName!,
+        email: AuthController.firebaseUser.value!.email!,
+        photoUrl: AuthController.firebaseUser.value!.photoURL ?? '',
+      );
+    } else {
+      return UserModel(
+        name: AuthController.googleSignInAccount.value!.displayName!,
+        email: AuthController.googleSignInAccount.value!.email,
+        photoUrl: AuthController.googleSignInAccount.value!.photoUrl,
+      );
+    }
   }
 }

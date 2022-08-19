@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:movie_app/controllers/home_controller.dart';
+import 'package:movie_app/controllers/home/home_controller.dart';
 import 'package:movie_app/widgets/welcome/logo.dart';
 
 import 'constants/consts.dart';
 import 'constants/themes.dart';
 import 'controllers/auth/auth_controller.dart';
-import 'controllers/theme_services.dart';
+import 'controllers/home/theme_services.dart';
 
 void main() async {
   Get.put(HomeController());
   WidgetsFlutterBinding.ensureInitialized();
-  await GetStorage.init();
   await firebaseInitialization.then((value) {
     Get.put(AuthController());
   });
-
+  await GetStorage.init();
   runApp(const MyApp());
 }
 
