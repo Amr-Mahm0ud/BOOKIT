@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:movie_app/models/user.dart';
@@ -77,6 +78,8 @@ class AuthController extends GetxController {
             Get.snackbar(
               'Error',
               onErr.toString(),
+              backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+              colorText: Colors.white,
             );
           },
         ).then((value) async {
@@ -92,6 +95,8 @@ class AuthController extends GetxController {
             Get.snackbar(
               'Error',
               onErr.toString(),
+              backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+              colorText: Colors.white,
             );
           });
         });
@@ -100,6 +105,8 @@ class AuthController extends GetxController {
       Get.snackbar(
         "Error",
         e.toString(),
+        backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+        colorText: Colors.white,
       );
     }
   }
@@ -124,11 +131,18 @@ class AuthController extends GetxController {
           Get.snackbar(
             'Error',
             onErr.toString(),
+            backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+            colorText: Colors.white,
           );
         });
       });
     } catch (firebaseAuthException) {
-      Get.snackbar('Error', firebaseAuthException.toString());
+      Get.snackbar(
+        'Error',
+        firebaseAuthException.toString(),
+        backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+        colorText: Colors.white,
+      );
     }
   }
 
@@ -136,7 +150,12 @@ class AuthController extends GetxController {
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
     } catch (firebaseAuthException) {
-      Get.snackbar('Error', firebaseAuthException.toString());
+      Get.snackbar(
+        'Error',
+        firebaseAuthException.toString(),
+        backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+        colorText: Colors.white,
+      );
     }
   }
 

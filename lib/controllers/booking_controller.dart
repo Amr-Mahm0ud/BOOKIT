@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../models/ticket.dart';
@@ -44,7 +45,12 @@ class BookingController extends GetxController {
           'movieID': ticket.selectedMovieId,
         }).then(
           (value) {
-            Get.snackbar('Success', 'Ticket booked successfully');
+            Get.snackbar(
+              'Success',
+              'Ticket booked successfully',
+              backgroundColor: Get.theme.primaryColor.withOpacity(0.5),
+              colorText: Colors.white,
+            );
           },
         );
       });
@@ -53,6 +59,8 @@ class BookingController extends GetxController {
       Get.snackbar(
         "Error",
         e.toString(),
+        backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+        colorText: Colors.white,
       );
       return null;
     }
@@ -89,6 +97,8 @@ class BookingController extends GetxController {
       Get.snackbar(
         "Error",
         e.toString(),
+        backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+        colorText: Colors.white,
       );
     }
   }

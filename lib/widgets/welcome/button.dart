@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 class Button extends StatelessWidget {
   final String label;
-  final void Function() onPressed;
+  final void Function()? onPressed;
   final bool border;
 
   const Button({

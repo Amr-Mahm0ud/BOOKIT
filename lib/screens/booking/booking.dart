@@ -147,13 +147,24 @@ class _BookingScreenState extends State<BookingScreen> {
                         ticket.userID =
                             AuthController.googleSignInAccount.value!.id;
                       }
-                      // print(ticket.selectedSeats);
-                      await BookingController().bookSeat(ticket).then((value) {
-                        if (value != null) {
-                          ticket.id = value;
-                          Get.off(() => TicketScreen(ticket: ticket));
-                        }
-                      });
+                      if (ticket.selectedSeats != null) {
+                        await BookingController()
+                            .bookSeat(ticket)
+                            .then((value) {
+                          if (value != null) {
+                            ticket.id = value;
+                            Get.off(() => TicketScreen(ticket: ticket));
+                          }
+                        });
+                      } else {
+                        Get.snackbar(
+                          'Failed!',
+                          'You must select one seat at least',
+                          backgroundColor:
+                              Get.theme.errorColor.withOpacity(0.5),
+                          colorText: Colors.white,
+                        );
+                      }
                     },
                   ),
                 ],

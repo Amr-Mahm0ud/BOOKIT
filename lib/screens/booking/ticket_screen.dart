@@ -20,6 +20,7 @@ class TicketScreen extends StatelessWidget {
           ),
         ),
         body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Center(
             child: Column(
               children: [
@@ -157,6 +158,7 @@ class TicketScreen extends StatelessWidget {
                               color: Get.theme.dividerColor,
                               thickness: 2,
                             ),
+                            const SizedBox(height: 10),
                             Center(
                               child: Image.asset(
                                 'assets/images/qrcode.png',

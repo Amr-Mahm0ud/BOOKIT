@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../constants/end_points.dart';
@@ -24,7 +25,12 @@ class MovieList {
       }
       return movieList;
     } catch (e) {
-      Get.snackbar('Error', e.toString());
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+        colorText: Colors.white,
+      );
     }
   }
 
@@ -84,20 +90,20 @@ class Movie {
   });
 
   Movie.fromJson(Map<String, dynamic> json) {
-    voteCount = json['vote_count'];
+    voteCount = json['vote_count'] ?? 0;
     id = json['id'];
-    video = json['video'];
+    video = json['video'] ?? false;
     voteAverage = json['vote_average'].toString();
-    title = json['title'];
-    popularity = json['popularity'];
-    posterPath = imageURL + json['poster_path'];
-    originalLanguage = json['original_language'];
-    originalTitle = json['original_title'];
+    title = json['title'] ?? '';
+    popularity = json['popularity'] == null ? 0.0 : json['popularity'] + 0.0;
+    posterPath = imageURL + json['poster_path'].toString();
+    originalLanguage = json['original_language'] ?? '';
+    originalTitle = json['original_title'] ?? '';
     if (json['genre_ids'] != null) genreIds = json['genre_ids'].cast<int>();
-    backdropPath = imageURL + json['backdrop_path'];
-    adult = json['adult'];
-    overview = json['overview'];
-    releaseDate = json['release_date'];
+    backdropPath = imageURL + json['backdrop_path'].toString();
+    adult = json['adult'] ?? false;
+    overview = json['overview'] ?? '';
+    releaseDate = json['release_date'] ?? '';
     tagLine = json['tagline'] ?? '';
     if (json['genres'] != null) {
       genres = [];
@@ -161,7 +167,12 @@ class Genre {
         genres.add(genre);
       }
     } catch (e) {
-      Get.snackbar('Error', e.toString());
+      Get.snackbar(
+        'Error',
+        e.toString(),
+        backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+        colorText: Colors.white,
+      );
     }
     return genres;
   }

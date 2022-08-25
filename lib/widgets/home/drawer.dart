@@ -111,10 +111,14 @@ class MyDrawer extends StatelessWidget {
                       .titleLarge!
                       .copyWith(color: Colors.white),
                 ),
-                trailing: const CircleAvatar(
+                trailing: CircleAvatar(
                   radius: 15,
                   backgroundColor: Colors.white,
-                  child: Text('1'),
+                  child: Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    color: Get.theme.primaryColor,
+                    size: 20,
+                  ),
                 ),
                 onTap: () {
                   Get.put(BookingController());

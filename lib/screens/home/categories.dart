@@ -37,17 +37,26 @@ class Categories extends GetView<TMDBController> {
             return const LinearProgressIndicator();
           }
           return GridView.builder(
-            padding: EdgeInsets.symmetric(horizontal: Get.width * 0.05),
+            physics: const BouncingScrollPhysics(),
+            padding: EdgeInsets.only(
+              left: Get.width * 0.05,
+              right: Get.width * 0.05,
+              bottom: MediaQuery.of(context).padding.bottom,
+            ),
             itemCount: controller.allGenres.length,
             itemBuilder: (context, index) => GestureDetector(
               child: buildGenre(index),
-              onTap: () => Get.to(
-                () => AllMovies(
-                  asWidget: false,
-                  title: controller.allGenres[index].name,
-                  genreId: controller.allGenres[index].id,
-                ),
-              ),
+              onTap: () async {
+                await controller
+                    .getMoviesInGenre(controller.allGenres[index].id)
+                    .then((_) => Get.to(
+                          () => AllMovies(
+                            asWidget: false,
+                            title: controller.allGenres[index].name,
+                            genreId: controller.allGenres[index].id,
+                          ),
+                        ));
+              },
             ),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,

@@ -35,30 +35,28 @@ class AllMovies extends GetView<TMDBController> {
                   }),
             ),
             body: genreId != null
-                ? ListView.separated(
-                    physics: const BouncingScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return FilmTile(
-                          movie: TMDBController.switchSection(title, controller)
-                              .movies!
-                              .where(
-                                (element) =>
-                                    element.genreIds!.contains(genreId),
-                              )
-                              .toList()[index]);
-                    },
-                    separatorBuilder: (_, index) {
-                      return const Divider();
-                    },
-                    itemCount: TMDBController.switchSection(title, controller)
-                        .movies!
-                        .where(
-                          (element) => element.genreIds!.contains(
-                            genreId,
-                          ),
-                        )
-                        .length)
+                ? FutureBuilder(
+                    future: controller.getMoviesInGenre(genreId),
+                    builder: (_, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const LinearProgressIndicator();
+                      } else if (controller.moviesInGenre.isEmpty) {
+                        return const LinearProgressIndicator();
+                      }
+                      return ListView.separated(
+                          physics: const BouncingScrollPhysics(),
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return FilmTile(
+                                movie: controller
+                                    .moviesInGenre.first.movies![index]);
+                          },
+                          separatorBuilder: (_, index) {
+                            return const Divider();
+                          },
+                          itemCount:
+                              controller.moviesInGenre.first.movies!.length);
+                    })
                 : ListView.separated(
                     physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,

@@ -29,8 +29,7 @@ class BottomNavBar extends StatelessWidget {
               .iconTheme
               .copyWith(color: Theme.of(context).primaryColor, size: 35),
           enableFeedback: true,
-          unselectedItemColor:
-              Theme.of(context).iconTheme.color!.withOpacity(0.5),
+          unselectedItemColor: Theme.of(context).primaryColor.withOpacity(0.5),
           backgroundColor: Get.isDarkMode
               ? Get.theme.cardColor.withOpacity(0.5)
               : Get.theme.primaryColor.withOpacity(0.1),

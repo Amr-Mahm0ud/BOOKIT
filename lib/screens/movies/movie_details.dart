@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_app/controllers/db/tmdb_controller.dart';
 import 'package:movie_app/screens/booking/booking.dart';
 import 'package:movie_app/widgets/welcome/button.dart';
+
+import '../../controllers/auth/auth_controller.dart';
 
 class MovieDetails extends GetView<TMDBController> {
   final int movieID;
@@ -45,11 +48,11 @@ class MovieDetails extends GetView<TMDBController> {
                         ),
                       ),
                       //back button
-                      Align(
-                        alignment: const Alignment(-0.9, -0.65),
+                      Positioned(
+                        top: Get.height * 0.04,
+                        left: Get.width * 0.025,
                         child: CircleAvatar(
-                          backgroundColor:
-                              Get.theme.primaryColor.withOpacity(0.7),
+                          backgroundColor: Colors.black38,
                           child: IconButton(
                             icon: const Icon(
                               Icons.arrow_back_ios_new_rounded,
@@ -57,6 +60,30 @@ class MovieDetails extends GetView<TMDBController> {
                             ),
                             onPressed: () {
                               Get.back();
+                            },
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: Get.height * 0.04,
+                        right: Get.width * 0.025,
+                        child: CircleAvatar(
+                          backgroundColor: Colors.black38,
+                          child: PopupMenuButton(
+                            icon: const Icon(Icons.more_vert_rounded,
+                                color: Colors.white),
+                            itemBuilder: (context) {
+                              return const [
+                                PopupMenuItem<int>(
+                                  value: 0,
+                                  child: Text('Add to favorites'),
+                                ),
+                              ];
+                            },
+                            onSelected: (value) {
+                              if (value == 0) {
+                                addMovieToFavorites();
+                              }
                             },
                           ),
                         ),
@@ -100,6 +127,7 @@ class MovieDetails extends GetView<TMDBController> {
                           Text(double.parse(controller.movie.value.voteAverage!)
                               .toStringAsFixed(2)),
                           const Icon(Icons.star, color: Colors.amber),
+                          const SizedBox(width: 15),
                         ],
                       ),
                       //backdrop
@@ -209,5 +237,41 @@ class MovieDetails extends GetView<TMDBController> {
         ).toList(),
       ],
     );
+  }
+
+  void addMovieToFavorites() async {
+    String userID = '';
+    if (AuthController.firebaseUser.value != null) {
+      userID = AuthController.firebaseUser.value!.uid;
+    } else {
+      userID = AuthController.googleSignInAccount.value!.id;
+    }
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('favorites')
+        .doc(movieID.toString())
+        .set({
+          'id': movieID,
+          'poster_path': controller.movie.value.backdropPath,
+          'title': controller.movie.value.title,
+          'release_date': controller.movie.value.releaseDate,
+          'original_language': controller.movie.value.originalLanguage,
+          'vote_average': controller.movie.value.voteAverage
+        })
+        .then(
+          (value) => Get.snackbar(
+            'Done!',
+            'Movie added successfully',
+            backgroundColor: Get.theme.primaryColor.withOpacity(0.5),
+            colorText: Colors.white,
+          ),
+        )
+        .catchError((error) => Get.snackbar(
+              'Error!',
+              error,
+              backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+              colorText: Colors.white,
+            ));
   }
 }
