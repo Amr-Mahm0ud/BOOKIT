@@ -20,15 +20,18 @@ class BookingScreen extends StatefulWidget {
 }
 
 class _BookingScreenState extends State<BookingScreen> {
-  final ticket = Ticket(
-    selectedDate: DateTime.now().toString(),
-    selectedTime: Ticket().times.keys.toList()[0],
-    selectedType: Ticket().types.keys.toList()[0],
-  );
+  late Ticket ticket;
   List<dynamic>? bookedSeats = [];
+
+  bool isLoading = false;
 
   @override
   void initState() {
+    ticket = Ticket(
+      selectedDate: DateTime.now().toString(),
+      selectedTime: Ticket().times.keys.toList()[0],
+      selectedType: Ticket().types.keys.toList()[0],
+    );
     getBookedSeats();
     super.initState();
   }
@@ -42,7 +45,8 @@ class _BookingScreenState extends State<BookingScreen> {
         .then((value) {
       bookedSeats = [];
       for (var seat in value.docs) {
-        if (seat.data()['date'] == ticket.selectedDate &&
+        if (seat.data()['date'].toString().split(' ')[0] ==
+                ticket.selectedDate!.split(' ')[0] &&
             seat.data()['time'] == ticket.selectedTime &&
             seat.data()['type'] == ticket.selectedType) {
           bookedSeats!.addAll(seat.data()['seatsIDs']);
@@ -52,7 +56,7 @@ class _BookingScreenState extends State<BookingScreen> {
             }
           });
 
-          if (ticket.selectedSeats != null) {
+          if (ticket.selectedSeats != null && !isLoading) {
             ticket.selectedSeats!
                 .removeWhere((seatID) => bookedSeats!.contains(seatID));
           }
@@ -135,38 +139,47 @@ class _BookingScreenState extends State<BookingScreen> {
                   ),
                   SizedBox(height: Get.height * 0.025),
                   buildSeats(),
-                  Button(
-                    label: 'Confirm',
-                    onPressed: () async {
-                      ticket.selectedMovieId = widget.movie.id;
-                      ticket.selectedMovieName = widget.movie.title;
-                      ticket.moviePoster = widget.movie.backdropPath;
-                      if (AuthController.firebaseUser.value != null) {
-                        ticket.userID = AuthController.firebaseUser.value!.uid;
-                      } else {
-                        ticket.userID =
-                            AuthController.googleSignInAccount.value!.id;
-                      }
-                      if (ticket.selectedSeats != null) {
-                        await BookingController()
-                            .bookSeat(ticket)
-                            .then((value) {
-                          if (value != null) {
-                            ticket.id = value;
-                            Get.off(() => TicketScreen(ticket: ticket));
-                          }
-                        });
-                      } else {
-                        Get.snackbar(
-                          'Failed!',
-                          'You must select one seat at least',
-                          backgroundColor:
-                              Get.theme.errorColor.withOpacity(0.5),
-                          colorText: Colors.white,
-                        );
-                      }
-                    },
-                  ),
+                  isLoading
+                      ? const Center(child: CircularProgressIndicator())
+                      : Button(
+                          label: 'Confirm',
+                          onPressed: () async {
+                            setState(() {
+                              isLoading = true;
+                            });
+                            ticket.selectedMovieId = widget.movie.id;
+                            ticket.selectedMovieName = widget.movie.title;
+                            ticket.moviePoster = widget.movie.backdropPath;
+                            if (AuthController.firebaseUser.value != null) {
+                              ticket.userID =
+                                  AuthController.firebaseUser.value!.uid;
+                            } else {
+                              ticket.userID =
+                                  AuthController.googleSignInAccount.value!.id;
+                            }
+                            if (ticket.selectedSeats != null) {
+                              await BookingController()
+                                  .bookSeat(ticket)
+                                  .then((value) {
+                                if (value != null) {
+                                  ticket.id = value;
+                                  Get.off(() => TicketScreen(ticket: ticket));
+                                }
+                              });
+                            } else {
+                              Get.snackbar(
+                                'Failed!',
+                                'You must select one seat at least',
+                                backgroundColor:
+                                    Get.theme.errorColor.withOpacity(0.5),
+                                colorText: Colors.white,
+                              );
+                            }
+                            setState(() {
+                              isLoading = false;
+                            });
+                          },
+                        ),
                 ],
               ),
             ),

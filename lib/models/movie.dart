@@ -62,7 +62,7 @@ class Movie {
   String? overview;
   String? releaseDate;
   String? tagLine;
-  List<String>? genres;
+  List<Genre>? genres;
   List<String>? languages;
   List<String>? productionCompanies;
   List<String>? productionCountries;
@@ -108,7 +108,7 @@ class Movie {
     if (json['genres'] != null) {
       genres = [];
       json['genres'].forEach((item) {
-        genres!.add(item['name']);
+        genres!.add(Genre(name: item['name'], id: item['id']));
       });
     }
     if (json['spoken_languages'] != null) {
@@ -155,7 +155,10 @@ class Genre {
   int? id;
   String? name;
 
-  Genre({id, name});
+  Genre({
+    this.id,
+    this.name,
+  });
 
   static fromJson(Map<String, dynamic> json) {
     List<Genre> genres = [];

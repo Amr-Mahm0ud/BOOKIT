@@ -202,8 +202,6 @@ class TMDBController extends GetxController {
             for (var element in value.docs) {
               favorites.add(Movie.fromJson(element.data()));
             }
-          } else {
-            favorites.add(Movie(title: ''));
           }
         },
       );
@@ -216,6 +214,78 @@ class TMDBController extends GetxController {
       );
     }
     update();
+  }
+
+  void addMovieToFavorites(movieID) async {
+    String userID = '';
+    if (AuthController.firebaseUser.value != null) {
+      userID = AuthController.firebaseUser.value!.uid;
+    } else {
+      userID = AuthController.googleSignInAccount.value!.id;
+    }
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('favorites')
+        .doc(movieID.toString())
+        .set({
+      'id': movieID,
+      'poster_path': movie.value.backdropPath,
+      'title': movie.value.title,
+      'release_date': movie.value.releaseDate,
+      'original_language': movie.value.originalLanguage,
+      'vote_average': movie.value.voteAverage
+    }).then(
+      (value) async {
+        Get.snackbar(
+          'Done!',
+          'Movie added successfully',
+          backgroundColor: Get.theme.primaryColor.withOpacity(0.5),
+          colorText: Colors.white,
+        );
+        await getFavorites();
+      },
+    ).catchError((error) {
+      Get.snackbar(
+        'Error!',
+        error,
+        backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+        colorText: Colors.white,
+      );
+    });
+  }
+
+  void removeFromFavorites(movieID) async {
+    String userID = '';
+    if (AuthController.firebaseUser.value != null) {
+      userID = AuthController.firebaseUser.value!.uid;
+    } else {
+      userID = AuthController.googleSignInAccount.value!.id;
+    }
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('favorites')
+        .doc(movieID.toString())
+        .delete()
+        .then(
+      (value) async {
+        Get.snackbar(
+          'Done!',
+          'Movie removed successfully',
+          backgroundColor: Get.theme.primaryColor.withOpacity(0.5),
+          colorText: Colors.white,
+        );
+        await getFavorites();
+      },
+    ).catchError((error) {
+      Get.snackbar(
+        'Error!',
+        error,
+        backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+        colorText: Colors.white,
+      );
+    });
   }
 
   static MovieList switchSection(sectionName, controller) {

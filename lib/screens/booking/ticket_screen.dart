@@ -149,11 +149,11 @@ class TicketScreen extends StatelessWidget {
                             buildInfo('Screen:', '2'),
                             buildInfo('Row:', getRow(ticket.selectedSeats!)),
                             buildInfo(
-                                'Seats:', getSeats(ticket.selectedSeats!)),
-                            buildInfo(
                                 'Price:',
                                 getPrice(
                                     ticket.selectedType, ticket.selectedTime)),
+                            buildInfo(
+                                'Seats:', getSeats(ticket.selectedSeats!)),
                             Divider(
                               color: Get.theme.dividerColor,
                               thickness: 2,
@@ -187,9 +187,14 @@ class TicketScreen extends StatelessWidget {
             style: Get.textTheme.headline6!.copyWith(color: Colors.grey),
           ),
           const Spacer(),
-          Text(
-            value,
-            style: Get.textTheme.headline6,
+          Container(
+            alignment: Alignment.centerRight,
+            width: Get.width * 0.6,
+            child: Text(
+              value,
+              overflow: TextOverflow.ellipsis,
+              style: Get.textTheme.headline6,
+            ),
           ),
         ],
       ),

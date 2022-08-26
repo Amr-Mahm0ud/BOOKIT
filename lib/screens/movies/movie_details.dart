@@ -1,21 +1,25 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_app/controllers/db/tmdb_controller.dart';
 import 'package:movie_app/screens/booking/booking.dart';
 import 'package:movie_app/widgets/welcome/button.dart';
 
-import '../../controllers/auth/auth_controller.dart';
+import 'all_movies.dart';
 
 class MovieDetails extends GetView<TMDBController> {
   final int movieID;
   const MovieDetails({required this.movieID, Key? key}) : super(key: key);
 
+  initFun() async {
+    await controller.fetchMovie(movieID.toString());
+    await controller.getFavorites();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
-        future: controller.fetchMovie(movieID.toString()),
+        future: initFun(),
         builder: (context, snapshot) {
           if (controller.movie.value.id != movieID) {
             return const LinearProgressIndicator();
@@ -73,16 +77,26 @@ class MovieDetails extends GetView<TMDBController> {
                             icon: const Icon(Icons.more_vert_rounded,
                                 color: Colors.white),
                             itemBuilder: (context) {
-                              return const [
-                                PopupMenuItem<int>(
-                                  value: 0,
-                                  child: Text('Add to favorites'),
-                                ),
+                              return [
+                                controller.favorites.any(
+                                  (element) =>
+                                      element.id == controller.movie.value.id,
+                                )
+                                    ? const PopupMenuItem<int>(
+                                        value: 1,
+                                        child: Text('Remove from favorites'),
+                                      )
+                                    : const PopupMenuItem<int>(
+                                        value: 0,
+                                        child: Text('Add to favorites'),
+                                      ),
                               ];
                             },
                             onSelected: (value) {
                               if (value == 0) {
-                                addMovieToFavorites();
+                                controller.addMovieToFavorites(movieID);
+                              } else if (value == 1) {
+                                controller.removeFromFavorites(movieID);
                               }
                             },
                           ),
@@ -150,22 +164,35 @@ class MovieDetails extends GetView<TMDBController> {
                         child: Wrap(
                           children: controller.movie.value.genres!
                               .map(
-                                (genre) => Container(
-                                  margin: const EdgeInsets.symmetric(
-                                    vertical: 5,
-                                    horizontal: 5,
+                                (genre) => GestureDetector(
+                                  onTap: () async {
+                                    await controller
+                                        .getMoviesInGenre(genre.id)
+                                        .then((_) => Get.to(
+                                              () => AllMovies(
+                                                asWidget: false,
+                                                title: genre.name,
+                                                genreId: genre.id,
+                                              ),
+                                            ));
+                                  },
+                                  child: Container(
+                                    margin: const EdgeInsets.symmetric(
+                                      vertical: 5,
+                                      horizontal: 5,
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 10,
+                                      horizontal: 10,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: Colors.accents[controller
+                                          .movie.value.genres!
+                                          .indexOf(genre)],
+                                    ),
+                                    child: Text(genre.name.toString()),
                                   ),
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 10,
-                                    horizontal: 10,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: Colors.accents[controller
-                                        .movie.value.genres!
-                                        .indexOf(genre)],
-                                  ),
-                                  child: Text(genre),
                                 ),
                               )
                               .toList(),
@@ -237,41 +264,5 @@ class MovieDetails extends GetView<TMDBController> {
         ).toList(),
       ],
     );
-  }
-
-  void addMovieToFavorites() async {
-    String userID = '';
-    if (AuthController.firebaseUser.value != null) {
-      userID = AuthController.firebaseUser.value!.uid;
-    } else {
-      userID = AuthController.googleSignInAccount.value!.id;
-    }
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(userID)
-        .collection('favorites')
-        .doc(movieID.toString())
-        .set({
-          'id': movieID,
-          'poster_path': controller.movie.value.backdropPath,
-          'title': controller.movie.value.title,
-          'release_date': controller.movie.value.releaseDate,
-          'original_language': controller.movie.value.originalLanguage,
-          'vote_average': controller.movie.value.voteAverage
-        })
-        .then(
-          (value) => Get.snackbar(
-            'Done!',
-            'Movie added successfully',
-            backgroundColor: Get.theme.primaryColor.withOpacity(0.5),
-            colorText: Colors.white,
-          ),
-        )
-        .catchError((error) => Get.snackbar(
-              'Error!',
-              error,
-              backgroundColor: Get.theme.errorColor.withOpacity(0.5),
-              colorText: Colors.white,
-            ));
   }
 }
