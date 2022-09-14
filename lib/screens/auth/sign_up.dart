@@ -144,27 +144,12 @@ class _SignUpState extends State<SignUp> {
                 //social buttons
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: Get.height * 0.02),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      FlutterSocialButton(
-                        mini: true,
-                        buttonType: ButtonType.google,
-                        onTap: () {
-                          authController.signInWithGoogle();
-                        },
-                      ),
-                      FlutterSocialButton(
-                        mini: true,
-                        buttonType: ButtonType.facebook,
-                        onTap: () {},
-                      ),
-                      FlutterSocialButton(
-                        mini: true,
-                        buttonType: ButtonType.apple,
-                        onTap: () {},
-                      ),
-                    ],
+                  child: FlutterSocialButton(
+                    mini: true,
+                    buttonType: ButtonType.google,
+                    onTap: () {
+                      authController.signInWithGoogle();
+                    },
                   ),
                 ),
                 Row(

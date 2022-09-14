@@ -45,12 +45,7 @@ class BookingController extends GetxController {
           'movieID': ticket.selectedMovieId,
         }).then(
           (value) {
-            Get.snackbar(
-              'Success',
-              'Ticket booked successfully',
-              backgroundColor: Get.theme.primaryColor.withOpacity(0.5),
-              colorText: Colors.white,
-            );
+            
           },
         );
       });
