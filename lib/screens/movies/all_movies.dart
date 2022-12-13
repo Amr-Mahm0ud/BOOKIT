@@ -62,15 +62,14 @@ class AllMovies extends GetView<TMDBController> {
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return FilmTile(
-                          movie: TMDBController.switchSection(title, controller)
-                              .movies![index]);
+                          movie: TMDBController.switchSection(
+                              title, controller)[index]);
                     },
                     separatorBuilder: (_, index) {
                       return const Divider();
                     },
-                    itemCount: TMDBController.switchSection(title, controller)
-                        .movies!
-                        .length,
+                    itemCount:
+                        TMDBController.switchSection(title, controller).length,
                   ),
           );
   }

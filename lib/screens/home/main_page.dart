@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
+import 'package:movie_app/controllers/db/tmdb_controller.dart';
+import 'package:movie_app/models/movie.dart';
+import 'package:movie_app/widgets/movie/film_card2.dart';
 import '../../widgets/sections/section_body.dart';
 import '../../widgets/sections/section_head.dart';
 import '../movies/all_movies.dart';
@@ -18,24 +22,49 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<HomeController>();
+    final tmdbController = Get.find<TMDBController>();
 
     return Obx(
-      () => Scaffold(
-        appBar: controller.currentPage != 0
-            ? AppBar(
-                title: Text(
-                    controller.currentPage == 2 ? 'Favorites' : 'Categories'),
-              )
-            : null,
-        extendBody: true,
-        key: scaffoldKey,
-        body: switchBody(),
-        drawer: controller.currentPage.value == 0 ? const MyDrawer() : null,
-        bottomNavigationBar: BottomNavBar(
-          currentIndex: controller.currentPage.value,
-          onTap: controller.onTapped,
-        ),
-      ),
+      () {
+        if ((tmdbController.allMoviesList.isEmpty ||
+            tmdbController.topRatedList.isEmpty ||
+            tmdbController.trendingList.isEmpty ||
+            tmdbController.nowPlayingList.isEmpty ||
+            tmdbController.popularList.isEmpty ||
+            tmdbController.upcomingList.isEmpty)) {
+          return Scaffold(
+            body: Center(
+              child: Lottie.asset(
+                'assets/lotties/loading.json',
+                width: Get.width * 0.3,
+              ),
+            ),
+          );
+        } else {
+          return Scaffold(
+            appBar: controller.currentPage != 0
+                ? AppBar(
+                    title: Text(controller.currentPage == 2
+                        ? 'Favorites'
+                        : 'Categories'),
+                  )
+                : null,
+            extendBody: true,
+            key: scaffoldKey,
+            body: SafeArea(
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 500),
+                child: switchBody(),
+              ),
+            ),
+            drawer: controller.currentPage.value == 0 ? const MyDrawer() : null,
+            bottomNavigationBar: BottomNavBar(
+              currentIndex: controller.currentPage.value,
+              onTap: controller.onTapped,
+            ),
+          );
+        }
+      },
     );
   }
 
@@ -113,6 +142,8 @@ class MainPage extends StatelessWidget {
   }
 
   buildHomeBody(context, controller) {
+    final TMDBController tmdbcontroller = Get.find<TMDBController>();
+
     return SingleChildScrollView(
       child: SafeArea(
         child: Padding(
@@ -125,15 +156,44 @@ class MainPage extends StatelessWidget {
                 children: [drawerIcon(controller), searchBar()],
               ),
               SizedBox(height: Get.height * 0.015),
-              const SectionHead(title: 'Trending'),
-              const SectionBody('Trending'),
+              //----------------------------------
+              const SectionHead(title: 'Upcoming'),
+              sectionBody2(tmdbcontroller.upcomingList.first.movies!),
+              //----------------------------------
+              const SectionHead(title: 'Top Trending'),
+              sectionBody2(
+                tmdbcontroller.trendingList.first.movies!.reversed.toList(),
+              ),
+              //----------------------------------
+              const SectionHead(title: 'Popular'),
+              const SectionBody('Popular'),
+              //----------------------------------
               const SectionHead(title: 'Top Rated'),
               const SectionBody('Top Rated'),
+              //----------------------------------
+              const SectionHead(title: 'Now Playing'),
+              sectionBody2(
+                tmdbcontroller.nowPlayingList.first.movies!.reversed.toList(),
+              ),
+              //----------------------------------
               const SectionHead(title: 'All Movies'),
               const AllMovies(asWidget: true),
+              //----------------------------------
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  sectionBody2(List<Movie> list) {
+    return SizedBox(
+      height: Get.height * 0.325,
+      width: double.infinity,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        physics: const BouncingScrollPhysics(),
+        children: list.map((movie) => FilmCard2(movie: movie)).toList(),
       ),
     );
   }

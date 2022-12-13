@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:movie_app/bindings/home_binding.dart';
 import 'package:movie_app/models/user.dart';
 import 'package:movie_app/screens/home/main_page.dart';
 import 'package:movie_app/screens/welcome.dart';
@@ -54,7 +55,11 @@ class AuthController extends GetxController {
           .get()
           .then((value) {
         if (value.exists) {
-          Get.offAll(() => MainPage());
+          Get.offAll(
+            () => MainPage(),
+            transition: Transition.fadeIn,
+            binding: HomeBinding(),
+          );
         }
       });
     }

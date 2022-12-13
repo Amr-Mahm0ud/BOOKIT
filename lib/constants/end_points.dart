@@ -5,6 +5,10 @@ const String imageURL = "https://image.tmdb.org/t/p/w500/";
 class EndPoints {
   static const trending = '$baseURL/trending/movie/week?api_key=$apiKey';
   static const topRated = '$baseURL/movie/top_rated?api_key=$apiKey';
+  static const latest = '$baseURL/movie/latest?api_key=$apiKey';
+  static const nowPlaying = '$baseURL/movie/now_playing?api_key=$apiKey';
+  static const popular = '$baseURL/movie/popular?api_key=$apiKey';
+  static const upcoming = '$baseURL/movie/upcoming?api_key=$apiKey';
   static const allMovies = '$baseURL/discover/movie?api_key=$apiKey';
   static const allGenres = '$baseURL/genre/movie/list?api_key=$apiKey';
 }

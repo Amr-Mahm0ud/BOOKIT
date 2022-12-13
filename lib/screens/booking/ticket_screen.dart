@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movie_app/bindings/home_binding.dart';
 import 'package:movie_app/models/ticket.dart';
 import 'package:movie_app/screens/home/main_page.dart';
 
@@ -15,7 +16,10 @@ class TicketScreen extends StatelessWidget {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios_new_rounded),
             onPressed: () {
-              Get.offAll(() => MainPage());
+              Get.offAll(
+                () => MainPage(),
+                binding: HomeBinding(),
+              );
             },
           ),
         ),

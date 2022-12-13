@@ -21,22 +21,20 @@ class SectionBody extends GetView<TMDBController> {
                   left: index == 0 ? 15 : 0,
                   right: index ==
                           TMDBController.switchSection(sectionName, controller)
-                                  .movies!
                                   .length -
                               1
                       ? 15
                       : 0),
               child: FilmCard(
-                  movie: TMDBController.switchSection(sectionName, controller)
-                      .movies![index]),
+                  movie: TMDBController.switchSection(
+                      sectionName, controller)[index]),
             );
           },
           separatorBuilder: (context, index) {
             return const SizedBox(width: 20);
           },
-          itemCount: TMDBController.switchSection(sectionName, controller)
-              .movies!
-              .length),
+          itemCount:
+              TMDBController.switchSection(sectionName, controller).length),
     );
   }
 }

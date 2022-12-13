@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:movie_app/controllers/home/home_controller.dart';
 import 'package:movie_app/widgets/welcome/logo.dart';
 
 import 'constants/consts.dart';
@@ -10,8 +10,9 @@ import 'controllers/auth/auth_controller.dart';
 import 'controllers/home/theme_services.dart';
 
 void main() async {
-  Get.put(HomeController());
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   await firebaseInitialization.then((value) {
     Get.put(AuthController());
   });
