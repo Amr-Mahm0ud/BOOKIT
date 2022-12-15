@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../bindings/movie_binding.dart';
+import '../../controllers/db/movie_controller.dart';
 import '../../models/movie.dart';
 import '../../screens/movies/movie_details.dart';
 
@@ -17,7 +19,11 @@ class FilmTile extends StatelessWidget {
         .copyWith(color: Theme.of(context).textTheme.headline4!.color);
     return GestureDetector(
       onTap: () {
-        Get.to(() => MovieDetails(movieID: movie.id!));
+        MovieController.id = movie.id.toString();
+        Get.to(
+          () => const MovieDetails(),
+          binding: MovieBinding(),
+        );
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

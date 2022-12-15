@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:movie_app/controllers/db/tmdb_controller.dart';
 
 import '../movies/all_movies.dart';
@@ -34,7 +35,12 @@ class Categories extends GetView<TMDBController> {
         future: controller.getAllGenres(),
         builder: (context, _) {
           if (controller.allGenres.isEmpty) {
-            return const LinearProgressIndicator();
+            return Center(
+              child: Lottie.asset(
+                'assets/lotties/loading.json',
+                width: Get.width * 0.3,
+              ),
+            );
           }
           return GridView.builder(
             physics: const BouncingScrollPhysics(),
@@ -54,6 +60,7 @@ class Categories extends GetView<TMDBController> {
                             asWidget: false,
                             title: controller.allGenres[index].name,
                             genreId: controller.allGenres[index].id,
+                            list: controller.moviesInGenre.first.movies!,
                           ),
                         ));
               },

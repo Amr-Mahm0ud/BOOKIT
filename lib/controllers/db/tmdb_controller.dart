@@ -14,13 +14,10 @@ class TMDBController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchAllMovies();
-    fetchTopRated();
-    fetchTrending();
-    fetchNowPlaying();
-    fetchPopular();
-    fetchUpcoming();
+    getAllData();
   }
+
+  RxBool isLoading = false.obs;
 
   RxList<MovieList> trendingList = <MovieList>[].obs;
   RxList<MovieList> topRatedList = <MovieList>[].obs;
@@ -28,13 +25,27 @@ class TMDBController extends GetxController {
   RxList<MovieList> popularList = <MovieList>[].obs;
   RxList<MovieList> upcomingList = <MovieList>[].obs;
   RxList<MovieList> allMoviesList = <MovieList>[].obs;
+  RxList<MovieList> recommendations = <MovieList>[].obs;
 
   RxList<Genre> allGenres = <Genre>[].obs;
   RxList<MovieList> moviesInGenre = <MovieList>[].obs;
 
   RxList<Movie> favorites = <Movie>[].obs;
 
-  Rx<Movie> movie = Movie().obs;
+  getAllData() async {
+    isLoading(true);
+    await fetchAllMovies();
+    await fetchTopRated();
+    await fetchTrending();
+    await fetchNowPlaying();
+    await fetchPopular();
+    await fetchUpcoming();
+    await getFavorites();
+    if (favorites.isNotEmpty) {
+      await fetchRecommendations(favorites.last.id);
+    }
+    isLoading(false);
+  }
 
   getMoviesInGenre(genre) async {
     moviesInGenre.clear();
@@ -61,31 +72,6 @@ class TMDBController extends GetxController {
       );
     }
     update();
-  }
-
-  fetchMovie(String id) async {
-    try {
-      final http.Response res =
-          await http.get(Uri.parse('$baseURL/movie/$id?api_key=$apiKey'));
-      if (res.statusCode == 200) {
-        var body = json.decode(res.body);
-        movie.value = Movie.fromJson(body);
-      } else {
-        Get.snackbar(
-          'Error',
-          'Something went wrong',
-          backgroundColor: Get.theme.errorColor.withOpacity(0.5),
-          colorText: Colors.white,
-        );
-      }
-    } catch (error) {
-      Get.snackbar(
-        'Error',
-        error.toString(),
-        backgroundColor: Get.theme.errorColor.withOpacity(0.5),
-        colorText: Colors.white,
-      );
-    }
   }
 
   fetchAllMovies() async {
@@ -298,7 +284,33 @@ class TMDBController extends GetxController {
     update();
   }
 
-  void addMovieToFavorites(movieID) async {
+  fetchRecommendations(id) async {
+    try {
+      var res = await http
+          .get(Uri.parse('$baseURL/movie/$id/recommendations?api_key=$apiKey'));
+      if (res.statusCode == 200) {
+        var body = json.decode(res.body);
+        recommendations.add(MovieList.fromJson(body));
+      } else {
+        Get.snackbar(
+          'Error',
+          'Something went wrong',
+          backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+          colorText: Colors.white,
+        );
+      }
+    } catch (error) {
+      Get.snackbar(
+        'Error',
+        error.toString(),
+        backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+        colorText: Colors.white,
+      );
+    }
+    update();
+  }
+
+  void addMovieToFavorites(movieID, movie) async {
     String userID = '';
     if (AuthController.firebaseUser.value != null) {
       userID = AuthController.firebaseUser.value!.uid;
@@ -368,24 +380,5 @@ class TMDBController extends GetxController {
         colorText: Colors.white,
       );
     });
-  }
-
-  static List<Movie> switchSection(sectionName, TMDBController controller) {
-    switch (sectionName) {
-      case 'Trending':
-        return controller.trendingList.first.movies!;
-      case 'Upcoming':
-        return controller.upcomingList.first.movies!;
-      case 'Now Playing':
-        return controller.nowPlayingList.first.movies!;
-      case 'Popular':
-        return controller.popularList.first.movies!.reversed.toList();
-      case 'Top Rated':
-        return controller.topRatedList.first.movies!;
-      case 'All Movies':
-        return controller.allMoviesList.first.movies!.reversed.toList();
-      default:
-        return controller.allMoviesList.first.movies!;
-    }
   }
 }

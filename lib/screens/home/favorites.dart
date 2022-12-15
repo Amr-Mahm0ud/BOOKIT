@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:movie_app/widgets/movie/film_card2.dart';
 
 import '../../controllers/db/tmdb_controller.dart';
@@ -13,7 +14,12 @@ class Favorites extends GetView<TMDBController> {
       future: controller.getFavorites(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const LinearProgressIndicator();
+          return Center(
+            child: Lottie.asset(
+              'assets/lotties/loading.json',
+              width: Get.width * 0.3,
+            ),
+          );
         }
         return Obx(
           () {
@@ -32,7 +38,10 @@ class Favorites extends GetView<TMDBController> {
               itemCount: controller.favorites.length,
               itemBuilder: (_, index) {
                 Movie movie = controller.favorites[index];
-                return FilmCard2(movie: movie);
+                return FilmCard2(
+                  movie: movie,
+                  inFavourite: true,
+                );
               },
             );
           },

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_app/controllers/db/tmdb_controller.dart';
+import 'package:movie_app/models/movie.dart';
 
 import '../../widgets/movie/film_tile.dart';
 
@@ -8,8 +9,14 @@ class AllMovies extends GetView<TMDBController> {
   final bool asWidget;
   final String? title;
   final int? genreId;
-  const AllMovies({Key? key, required this.asWidget, this.title, this.genreId})
-      : super(key: key);
+  final List<Movie> list;
+  const AllMovies({
+    Key? key,
+    required this.asWidget,
+    required this.list,
+    this.title,
+    this.genreId,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -61,15 +68,12 @@ class AllMovies extends GetView<TMDBController> {
                     physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
-                      return FilmTile(
-                          movie: TMDBController.switchSection(
-                              title, controller)[index]);
+                      return FilmTile(movie: list[index]);
                     },
                     separatorBuilder: (_, index) {
                       return const Divider();
                     },
-                    itemCount:
-                        TMDBController.switchSection(title, controller).length,
+                    itemCount: list.length,
                   ),
           );
   }

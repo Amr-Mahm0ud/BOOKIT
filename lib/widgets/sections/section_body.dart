@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_app/controllers/db/tmdb_controller.dart';
 
+import '../../models/movie.dart';
 import '../movie/film_card.dart';
 
 class SectionBody extends GetView<TMDBController> {
-  final String sectionName;
-  const SectionBody(this.sectionName, {Key? key}) : super(key: key);
+  final List<Movie> list;
+  final bool padding;
+  const SectionBody(this.list, {Key? key, this.padding = true})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,24 +20,18 @@ class SectionBody extends GetView<TMDBController> {
           physics: const BouncingScrollPhysics(),
           itemBuilder: (context, index) {
             return Padding(
-              padding: EdgeInsets.only(
-                  left: index == 0 ? 15 : 0,
-                  right: index ==
-                          TMDBController.switchSection(sectionName, controller)
-                                  .length -
-                              1
-                      ? 15
-                      : 0),
-              child: FilmCard(
-                  movie: TMDBController.switchSection(
-                      sectionName, controller)[index]),
+              padding: padding
+                  ? EdgeInsets.only(
+                      left: index == 0 ? 15 : 0,
+                      right: index == list.length - 1 ? 15 : 0)
+                  : EdgeInsets.zero,
+              child: FilmCard(movie: list[index]),
             );
           },
           separatorBuilder: (context, index) {
             return const SizedBox(width: 20);
           },
-          itemCount:
-              TMDBController.switchSection(sectionName, controller).length),
+          itemCount: list.length),
     );
   }
 }

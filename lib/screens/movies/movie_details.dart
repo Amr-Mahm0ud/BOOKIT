@@ -1,34 +1,43 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
+import 'package:movie_app/controllers/db/movie_controller.dart';
 import 'package:movie_app/controllers/db/tmdb_controller.dart';
 import 'package:movie_app/screens/booking/booking.dart';
+import 'package:movie_app/widgets/sections/section_head.dart';
 import 'package:movie_app/widgets/welcome/button.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
+import '../../widgets/movie/film_card.dart';
 import 'all_movies.dart';
 
-class MovieDetails extends GetView<TMDBController> {
-  final int movieID;
-  const MovieDetails({required this.movieID, Key? key}) : super(key: key);
-
-  initFun() async {
-    await controller.fetchMovie(movieID.toString());
-    await controller.getFavorites();
-  }
+class MovieDetails extends StatelessWidget {
+  const MovieDetails({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: FutureBuilder(
-        future: initFun(),
-        builder: (context, snapshot) {
-          if (controller.movie.value.id != movieID) {
-            return const LinearProgressIndicator();
+    final MovieController controller = Get.find<MovieController>();
+    final TMDBController tmdbcontroller = Get.find<TMDBController>();
+    return
+        // YoutubePlayerBuilder(
+        //   builder: (p0, p1) =>
+        Scaffold(
+      body: Obx(
+        () {
+          if (controller.isLoading.value) {
+            return Center(
+              child: Lottie.asset(
+                'assets/lotties/loading.json',
+                width: Get.width * 0.3,
+              ),
+            );
           }
           return SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(
-                  height: Get.height * 0.425,
+                AspectRatio(
+                  aspectRatio: 1.2,
                   child: Stack(
                     children: [
                       //poster
@@ -78,7 +87,7 @@ class MovieDetails extends GetView<TMDBController> {
                                 color: Colors.white),
                             itemBuilder: (context) {
                               return [
-                                controller.favorites.any(
+                                tmdbcontroller.favorites.any(
                                   (element) =>
                                       element.id == controller.movie.value.id,
                                 )
@@ -94,9 +103,12 @@ class MovieDetails extends GetView<TMDBController> {
                             },
                             onSelected: (value) {
                               if (value == 0) {
-                                controller.addMovieToFavorites(movieID);
+                                tmdbcontroller.addMovieToFavorites(
+                                    controller.movie.value.id,
+                                    controller.movie);
                               } else if (value == 1) {
-                                controller.removeFromFavorites(movieID);
+                                tmdbcontroller.removeFromFavorites(
+                                    controller.movie.value.id);
                               }
                             },
                           ),
@@ -145,19 +157,30 @@ class MovieDetails extends GetView<TMDBController> {
                         ],
                       ),
                       //backdrop
-                      Container(
-                        margin:
-                            EdgeInsets.symmetric(vertical: Get.width * 0.025),
-                        height: Get.height * 0.24,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          image: DecorationImage(
-                            image: NetworkImage(
-                                controller.movie.value.backdropPath!),
-                            fit: BoxFit.cover,
+                      if (!controller.movie.value.backdropPath!
+                          .contains('null'))
+                        AspectRatio(
+                          aspectRatio: 16 / 9,
+                          child: Container(
+                            margin: EdgeInsets.symmetric(
+                                vertical: Get.width * 0.025),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              image: controller.videos.isEmpty
+                                  ? DecorationImage(
+                                      image: NetworkImage(
+                                        controller.movie.value.backdropPath!,
+                                      ),
+                                      fit: BoxFit.cover,
+                                    )
+                                  : null,
+                            ),
+                            child: controller.videos.isNotEmpty
+                                ? YoutubePlayer(
+                                    controller: controller.videoController)
+                                : null,
                           ),
                         ),
-                      ),
                       //genres
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10.0),
@@ -166,13 +189,17 @@ class MovieDetails extends GetView<TMDBController> {
                               .map(
                                 (genre) => GestureDetector(
                                   onTap: () async {
-                                    await controller
+                                    await tmdbcontroller
                                         .getMoviesInGenre(genre.id)
                                         .then((_) => Get.to(
                                               () => AllMovies(
                                                 asWidget: false,
                                                 title: genre.name,
                                                 genreId: genre.id,
+                                                list: tmdbcontroller
+                                                    .moviesInGenre
+                                                    .first
+                                                    .movies!,
                                               ),
                                             ));
                                   },
@@ -222,9 +249,60 @@ class MovieDetails extends GetView<TMDBController> {
                         'Languages',
                         controller.movie.value.languages!,
                       ),
+                      if (controller.similarMovies.first.movies!.isNotEmpty ||
+                          controller.recommendations.first.movies!.isNotEmpty)
+                        Divider(
+                          color: Get.theme.iconTheme.color!.withOpacity(0.5),
+                          thickness: 1,
+                        ),
+                      if (controller
+                          .similarMovies.first.movies!.isNotEmpty) ...[
+                        SectionHead(
+                          title: 'Similar Movies',
+                          details: true,
+                          list: controller.similarMovies.first.movies!,
+                          onTap: () {
+                            Get.off(
+                              () => AllMovies(
+                                asWidget: false,
+                                title: 'Similar Movies',
+                                list: controller.similarMovies.first.movies!,
+                              ),
+                            );
+                          },
+                        ),
+                        sectionBodyFromDetails(
+                          controller.similarMovies.first.movies!,
+                          controller,
+                          padding: false,
+                        ),
+                      ],
+                      if (controller
+                          .recommendations.first.movies!.isNotEmpty) ...[
+                        SectionHead(
+                          title: 'Recommendations',
+                          details: true,
+                          list: controller.recommendations.first.movies!,
+                          onTap: () {
+                            Get.off(
+                              () => AllMovies(
+                                asWidget: false,
+                                title: 'Recommendations',
+                                list: controller.recommendations.first.movies!,
+                              ),
+                            );
+                          },
+                        ),
+                        sectionBodyFromDetails(
+                          controller.recommendations.first.movies!,
+                          controller,
+                          padding: false,
+                        ),
+                      ],
+                      //Button
                       Padding(
                         padding:
-                            EdgeInsets.symmetric(vertical: Get.height * 0.025),
+                            EdgeInsets.symmetric(vertical: Get.height * 0.015),
                         child: Button(
                           label: 'Book IT',
                           onPressed: () {
@@ -241,6 +319,64 @@ class MovieDetails extends GetView<TMDBController> {
           );
         },
       ),
+    ); // player: YoutubePlayer(
+    //   controller: controller.videoController,
+    //   showVideoProgressIndicator: true,
+    //   progressIndicatorColor: Colors.blueAccent,
+    //   topActions: <Widget>[
+    //     const SizedBox(width: 8.0),
+    //     Expanded(
+    //       child: Text(
+    //         controller.videoController.metadata.title,
+    //         style: const TextStyle(
+    //           color: Colors.white,
+    //           fontSize: 18.0,
+    //         ),
+    //         overflow: TextOverflow.ellipsis,
+    //         maxLines: 1,
+    //       ),
+    //     ),
+    //     IconButton(
+    //       icon: const Icon(
+    //         Icons.settings,
+    //         color: Colors.white,
+    //         size: 25.0,
+    //       ),
+    //       onPressed: () {
+    //         log('Settings Tapped!');
+    //       },
+    //     ),
+    //   ],
+    // ),
+    // );
+  }
+
+  sectionBodyFromDetails(list, controller, {padding}) {
+    return SizedBox(
+      height: Get.height * 0.325,
+      child: ListView.separated(
+          scrollDirection: Axis.horizontal,
+          physics: const BouncingScrollPhysics(),
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: padding
+                  ? EdgeInsets.only(
+                      left: index == 0 ? 15 : 0,
+                      right: index == list.length - 1 ? 15 : 0)
+                  : EdgeInsets.zero,
+              child: FilmCard(
+                movie: list[index],
+                onTap: () {
+                  MovieController.id = list[index].id.toString();
+                  controller.getAllData();
+                },
+              ),
+            );
+          },
+          separatorBuilder: (context, index) {
+            return const SizedBox(width: 20);
+          },
+          itemCount: list.length),
     );
   }
 

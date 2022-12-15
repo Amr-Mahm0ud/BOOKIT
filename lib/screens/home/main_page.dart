@@ -26,12 +26,13 @@ class MainPage extends StatelessWidget {
 
     return Obx(
       () {
-        if ((tmdbController.allMoviesList.isEmpty ||
-            tmdbController.topRatedList.isEmpty ||
-            tmdbController.trendingList.isEmpty ||
-            tmdbController.nowPlayingList.isEmpty ||
-            tmdbController.popularList.isEmpty ||
-            tmdbController.upcomingList.isEmpty)) {
+        // if ((tmdbController.allMoviesList.isEmpty ||
+        //     tmdbController.topRatedList.isEmpty ||
+        //     tmdbController.trendingList.isEmpty ||
+        //     tmdbController.nowPlayingList.isEmpty ||
+        //     tmdbController.popularList.isEmpty ||
+        //     tmdbController.upcomingList.isEmpty)) {
+        if (tmdbController.isLoading.value) {
           return Scaffold(
             body: Center(
               child: Lottie.asset(
@@ -157,27 +158,61 @@ class MainPage extends StatelessWidget {
               ),
               SizedBox(height: Get.height * 0.015),
               //----------------------------------
-              const SectionHead(title: 'Upcoming'),
+              if (tmdbcontroller.recommendations.first.movies!.isNotEmpty) ...[
+                SectionHead(
+                  title: 'Recommendations',
+                  list: tmdbcontroller.recommendations.first.movies!,
+                ),
+                sectionBody2(tmdbcontroller.recommendations.first.movies!),
+                const Divider(),
+              ], //----------------------------------
+              SectionHead(
+                title: 'Upcoming',
+                list: tmdbcontroller.upcomingList.first.movies!,
+              ),
               sectionBody2(tmdbcontroller.upcomingList.first.movies!),
+              const Divider(),
               //----------------------------------
-              const SectionHead(title: 'Top Trending'),
+              SectionHead(
+                title: 'Top Trending',
+                list: tmdbcontroller.trendingList.first.movies!,
+              ),
               sectionBody2(
                 tmdbcontroller.trendingList.first.movies!.reversed.toList(),
               ),
+              const Divider(),
               //----------------------------------
-              const SectionHead(title: 'Popular'),
-              const SectionBody('Popular'),
+              SectionHead(
+                title: 'Popular',
+                list: tmdbcontroller.popularList.first.movies!,
+              ),
+              SectionBody(tmdbcontroller.popularList.first.movies!),
+              const Divider(),
               //----------------------------------
-              const SectionHead(title: 'Top Rated'),
-              const SectionBody('Top Rated'),
+              SectionHead(
+                title: 'Top Rated',
+                list: tmdbcontroller.topRatedList.first.movies!,
+              ),
+              SectionBody(tmdbcontroller.topRatedList.first.movies!),
+              const Divider(),
               //----------------------------------
-              const SectionHead(title: 'Now Playing'),
+              SectionHead(
+                title: 'Now Playing',
+                list: tmdbcontroller.nowPlayingList.first.movies!,
+              ),
               sectionBody2(
                 tmdbcontroller.nowPlayingList.first.movies!.reversed.toList(),
               ),
+              const Divider(),
               //----------------------------------
-              const SectionHead(title: 'All Movies'),
-              const AllMovies(asWidget: true),
+              SectionHead(
+                title: 'All Movies',
+                list: tmdbcontroller.allMoviesList.first.movies!,
+              ),
+              AllMovies(
+                asWidget: true,
+                list: tmdbcontroller.allMoviesList.first.movies!,
+              ),
               //----------------------------------
             ],
           ),

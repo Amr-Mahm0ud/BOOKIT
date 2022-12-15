@@ -1,21 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movie_app/bindings/movie_binding.dart';
+import 'package:movie_app/controllers/db/movie_controller.dart';
 import 'package:movie_app/models/movie.dart';
 
 import '../../screens/movies/movie_details.dart';
 
 class FilmCard extends StatelessWidget {
   final Movie movie;
+  final void Function()? onTap;
 
-  const FilmCard({Key? key, required this.movie}) : super(key: key);
+  const FilmCard({Key? key, required this.movie, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(15),
-      onTap: () {
-        Get.to(() => MovieDetails(movieID: movie.id!));
-      },
+      onTap: onTap ??
+          () {
+            MovieController.id = movie.id.toString();
+            Get.to(
+              () => const MovieDetails(),
+              binding: MovieBinding(),
+            );
+          },
       child: SizedBox(
         width: Get.width * 0.38,
         child: Column(
@@ -32,13 +40,27 @@ class FilmCard extends StatelessWidget {
                 height: Get.height * 0.225,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
-                  image: DecorationImage(
-                    image: NetworkImage(
-                      movie.posterPath.toString(),
-                    ),
-                    fit: BoxFit.cover,
-                  ),
+                  image: !(movie.posterPath!.contains('null') &&
+                          movie.backdropPath!.contains('null'))
+                      ? DecorationImage(
+                          image: NetworkImage(
+                            movie.posterPath!.contains('null')
+                                ? movie.backdropPath!.toString()
+                                : movie.posterPath!.toString(),
+                          ),
+                          fit: BoxFit.cover,
+                        )
+                      : null,
                 ),
+                child: movie.posterPath!.contains('null') &&
+                        movie.backdropPath!.contains('null')
+                    ? Center(
+                        child: Text(
+                          'No Image',
+                          style: Get.textTheme.headline4,
+                        ),
+                      )
+                    : null,
               ),
             ),
             const SizedBox(height: 15),
