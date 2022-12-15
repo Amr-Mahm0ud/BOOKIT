@@ -127,15 +127,15 @@ class MovieController extends GetxController {
           .get(Uri.parse('$baseURL/movie/$id/videos?api_key=$apiKey'));
       if (res.statusCode == 200) {
         var body = json.decode(res.body);
-        videos.add(VideoModel.fromJson(body));
-        videoController = YoutubePlayerController(
-          // initialVideoId: videos.first.key!,
-          flags: const YoutubePlayerFlags(
-            autoPlay: true,
-            mute: true,
-          ),
-          initialVideoId: 'iLnmTe5Q2Qw',
-        );
+        if (body['results'].isNotEmpty) {
+          videos.add(VideoModel.fromJson(body['results'].first));
+        }
+        if (videos.isNotEmpty) {
+          videoController = YoutubePlayerController(
+            initialVideoId: videos.first.key!,
+            flags: const YoutubePlayerFlags(autoPlay: false),
+          );
+        }
       } else {
         Get.snackbar(
           'Error',
