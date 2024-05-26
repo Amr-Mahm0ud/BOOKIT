@@ -10,34 +10,36 @@ const Color white = Color(0xFFFFFFFF);
 class Themes {
   static final lightTheme = ThemeData.light().copyWith(
     primaryColor: primaryClr,
-    backgroundColor: backLight,
     splashColor: primaryClr,
     brightness: Brightness.light,
     scaffoldBackgroundColor: backLight,
     cardColor: white,
     appBarTheme: const AppBarTheme(
         elevation: 0, foregroundColor: backDark, color: backLight),
-    colorScheme: const ColorScheme.light().copyWith(
-      primary: primaryClr,
-      secondary: secondaryClr,
-      error: Colors.redAccent,
-    ),
     textTheme: ThemeData.light().textTheme.apply(fontFamily: 'Nunito'),
+    colorScheme: const ColorScheme.light()
+        .copyWith(
+          primary: primaryClr,
+          secondary: secondaryClr,
+          error: Colors.redAccent,
+        )
+        .copyWith(background: backLight),
   );
   static final darkTheme = ThemeData.dark().copyWith(
     primaryColor: primaryClr,
-    backgroundColor: backDark,
     splashColor: primaryClr,
     brightness: Brightness.dark,
     scaffoldBackgroundColor: backDark,
     cardColor: grayShade,
     appBarTheme: const AppBarTheme(
         elevation: 0, foregroundColor: white, color: backDark),
-    colorScheme: const ColorScheme.dark().copyWith(
-      primary: primaryClr,
-      secondary: secondaryClr,
-      error: Colors.redAccent,
-    ),
     textTheme: ThemeData.dark().textTheme.apply(fontFamily: 'Nunito'),
+    colorScheme: const ColorScheme.dark()
+        .copyWith(
+          primary: primaryClr,
+          secondary: secondaryClr,
+          error: Colors.redAccent,
+        )
+        .copyWith(background: backDark),
   );
 }

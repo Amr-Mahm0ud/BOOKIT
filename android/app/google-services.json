@@ -1,44 +1,26 @@
 {
   "project_info": {
-    "project_number": "1006496639722",
-    "project_id": "bookit-953c3",
-    "storage_bucket": "bookit-953c3.appspot.com"
+    "project_number": "431661313291",
+    "project_id": "movies-fbd43",
+    "storage_bucket": "movies-fbd43.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1006496639722:android:c8baa98f8b69eab517c593",
+        "mobilesdk_app_id": "1:431661313291:android:b8e055470996da7abe860e",
         "android_client_info": {
           "package_name": "com.example.movie_app"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "1006496639722-02ecr1u0srd7k6lg6l13100158888l8n.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.movie_app",
-            "certificate_hash": "1005e448db5e7c849dcc51134cbd90a14a8ef6f0"
-          }
-        },
-        {
-          "client_id": "1006496639722-t3i6a2fiietg4k2rm9eiq79cqafimjld.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAHo43vZwmfoi5NIzopjEXze38ymhvyA8E"
+          "current_key": "AIzaSyD_msbN6MshWuoYQZBUeXE7QePbajAU5Lg"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1006496639722-t3i6a2fiietg4k2rm9eiq79cqafimjld.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
