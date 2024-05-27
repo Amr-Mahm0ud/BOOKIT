@@ -11,12 +11,12 @@ class AllMovies extends GetView<TMDBController> {
   final int? genreId;
   final List<Movie> list;
   const AllMovies({
-    Key? key,
+    super.key,
     required this.asWidget,
     required this.list,
     this.title,
     this.genreId,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

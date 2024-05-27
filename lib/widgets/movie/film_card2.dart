@@ -55,7 +55,7 @@ class FilmCard2 extends StatelessWidget {
                 movie.title.toString(),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: Get.textTheme.headline5!,
+                style: Get.textTheme.headlineSmall!,
               ),
             ],
           ),

@@ -7,11 +7,11 @@ class Button extends StatelessWidget {
   final bool border;
 
   const Button({
-    Key? key,
+    super.key,
     required this.label,
     required this.onPressed,
     this.border = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

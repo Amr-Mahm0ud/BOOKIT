@@ -83,9 +83,10 @@ class AuthController extends GetxController {
             Get.snackbar(
               'Error',
               onErr.toString(),
-              backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+              backgroundColor: Get.theme.colorScheme.error.withOpacity(0.5),
               colorText: Colors.white,
             );
+            throw Exception('An Error Occured: $onErr');
           },
         ).then((value) async {
           await FirebaseFirestore.instance
@@ -100,7 +101,7 @@ class AuthController extends GetxController {
             Get.snackbar(
               'Error',
               onErr.toString(),
-              backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+              backgroundColor: Get.theme.colorScheme.error.withOpacity(0.5),
               colorText: Colors.white,
             );
           });
@@ -110,7 +111,7 @@ class AuthController extends GetxController {
       Get.snackbar(
         "Error",
         e.toString(),
-        backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+        backgroundColor: Get.theme.colorScheme.error.withOpacity(0.5),
         colorText: Colors.white,
       );
     }
@@ -136,7 +137,7 @@ class AuthController extends GetxController {
           Get.snackbar(
             'Error',
             onErr.toString(),
-            backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+            backgroundColor: Get.theme.colorScheme.error.withOpacity(0.5),
             colorText: Colors.white,
           );
         });
@@ -145,7 +146,7 @@ class AuthController extends GetxController {
       Get.snackbar(
         'Error',
         firebaseAuthException.toString(),
-        backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+        backgroundColor: Get.theme.colorScheme.error.withOpacity(0.5),
         colorText: Colors.white,
       );
     }
@@ -158,7 +159,7 @@ class AuthController extends GetxController {
       Get.snackbar(
         'Error',
         firebaseAuthException.toString(),
-        backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+        backgroundColor: Get.theme.colorScheme.error.withOpacity(0.5),
         colorText: Colors.white,
       );
     }

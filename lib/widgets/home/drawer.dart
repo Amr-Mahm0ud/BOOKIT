@@ -11,7 +11,7 @@ import '../../screens/booking/my_booking.dart';
 import '../welcome/button.dart';
 
 class MyDrawer extends StatelessWidget {
-  const MyDrawer({Key? key}) : super(key: key);
+  const MyDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class MyDrawer extends StatelessWidget {
                       ),
                       Text(
                         user.email,
-                        style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
                             color: Colors.white70,
                             fontWeight: FontWeight.normal),
                       ),

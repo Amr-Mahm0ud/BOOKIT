@@ -8,8 +8,7 @@ import '../movie/film_card.dart';
 class SectionBody extends GetView<TMDBController> {
   final List<Movie> list;
   final bool padding;
-  const SectionBody(this.list, {Key? key, this.padding = true})
-      : super(key: key);
+  const SectionBody(this.list, {super.key, this.padding = true});
 
   @override
   Widget build(BuildContext context) {

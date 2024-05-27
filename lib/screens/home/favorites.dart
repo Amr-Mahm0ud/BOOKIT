@@ -7,7 +7,7 @@ import '../../controllers/db/tmdb_controller.dart';
 import '../../models/movie.dart';
 
 class Favorites extends GetView<TMDBController> {
-  const Favorites({Key? key}) : super(key: key);
+  const Favorites({super.key});
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -28,8 +28,8 @@ class Favorites extends GetView<TMDBController> {
               return Center(
                 child: Text(
                   'You have no favorites',
-                  style: Get.textTheme.headline5!
-                      .copyWith(color: Get.textTheme.headline4!.color),
+                  style: Get.textTheme.headlineSmall!
+                      .copyWith(color: Get.textTheme.headlineMedium!.color),
                 ),
               );
             }

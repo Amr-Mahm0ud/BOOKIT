@@ -4,7 +4,7 @@ import 'package:movie_app/controllers/booking_controller.dart';
 import 'package:movie_app/widgets/ticket_tile.dart';
 
 class MyBooking extends GetView<BookingController> {
-  const MyBooking({Key? key}) : super(key: key);
+  const MyBooking({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class MyBooking extends GetView<BookingController> {
                         ? Center(
                             child: Text(
                               'No Bookings',
-                              style: Get.textTheme.headline4,
+                              style: Get.textTheme.headlineMedium,
                             ),
                           )
                         : ListView(

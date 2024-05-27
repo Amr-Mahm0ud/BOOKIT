@@ -13,7 +13,7 @@ import '../../models/ticket.dart';
 
 class BookingScreen extends StatefulWidget {
   final Movie movie;
-  const BookingScreen({Key? key, required this.movie}) : super(key: key);
+  const BookingScreen({super.key, required this.movie});
 
   @override
   State<BookingScreen> createState() => _BookingScreenState();
@@ -90,7 +90,7 @@ class _BookingScreenState extends State<BookingScreen> {
                 children: [
                   Text(
                     'Available In',
-                    style: Get.textTheme.headline6!
+                    style: Get.textTheme.titleLarge!
                         .copyWith(color: Colors.blueGrey),
                   ),
                   const SizedBox(height: 5),
@@ -104,7 +104,7 @@ class _BookingScreenState extends State<BookingScreen> {
                   SizedBox(height: Get.height * 0.03),
                   Text(
                     'Date',
-                    style: Get.textTheme.headline6!
+                    style: Get.textTheme.titleLarge!
                         .copyWith(color: Colors.blueGrey),
                   ),
                   const SizedBox(height: 5),
@@ -112,7 +112,7 @@ class _BookingScreenState extends State<BookingScreen> {
                   SizedBox(height: Get.height * 0.03),
                   Text(
                     'Time',
-                    style: Get.textTheme.headline6!
+                    style: Get.textTheme.titleLarge!
                         .copyWith(color: Colors.blueGrey),
                   ),
                   const SizedBox(height: 5),
@@ -171,7 +171,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                 'Failed!',
                                 'You must select one seat at least',
                                 backgroundColor:
-                                    Get.theme.errorColor.withOpacity(0.5),
+                                    Get.theme.colorScheme.error.withOpacity(0.5),
                                 colorText: Colors.white,
                               );
                             }
@@ -269,10 +269,10 @@ class _BookingScreenState extends State<BookingScreen> {
               : Get.theme.scaffoldBackgroundColor,
         ),
         child: Text(ticket.types.keys.toList()[index],
-            style: Get.textTheme.headline5!.copyWith(
+            style: Get.textTheme.headlineSmall!.copyWith(
                 color: ticket.types.values.toList()[index]
                     ? Colors.white
-                    : Get.textTheme.headline5!.color)),
+                    : Get.textTheme.headlineSmall!.color)),
       ),
     );
   }
@@ -280,8 +280,8 @@ class _BookingScreenState extends State<BookingScreen> {
   Widget buildDateTimeLine() {
     return DatePicker(
       DateTime.now(),
-      dateTextStyle: context.textTheme.headline5!,
-      dayTextStyle: context.textTheme.bodyText1!,
+      dateTextStyle: context.textTheme.headlineSmall!,
+      dayTextStyle: context.textTheme.bodyLarge!,
       monthTextStyle: const TextStyle(fontSize: 0),
       initialSelectedDate: DateTime.now(),
       onDateChange: (newDate) {
@@ -321,10 +321,10 @@ class _BookingScreenState extends State<BookingScreen> {
                       : Get.theme.scaffoldBackgroundColor,
                 ),
                 child: Text(ticket.times.keys.toList()[index],
-                    style: Get.textTheme.headline5!.copyWith(
+                    style: Get.textTheme.headlineSmall!.copyWith(
                         color: ticket.times.values.toList()[index]
                             ? Colors.white
-                            : Get.textTheme.headline5!.color)),
+                            : Get.textTheme.headlineSmall!.color)),
               ),
             );
           },

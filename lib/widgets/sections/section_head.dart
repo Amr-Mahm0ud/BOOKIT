@@ -10,12 +10,11 @@ class SectionHead extends StatelessWidget {
   final List<Movie> list;
   final void Function()? onTap;
   const SectionHead(
-      {Key? key,
+      {super.key,
       required this.title,
       this.details = false,
       required this.list,
-      this.onTap})
-      : super(key: key);
+      this.onTap});
 
   @override
   Widget build(BuildContext context) {

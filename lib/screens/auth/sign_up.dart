@@ -11,7 +11,7 @@ import '../../constants/consts.dart';
 import '../../widgets/welcome/button.dart';
 
 class SignUp extends StatefulWidget {
-  const SignUp({Key? key}) : super(key: key);
+  const SignUp({super.key});
 
   @override
   State<SignUp> createState() => _SignUpState();
@@ -121,8 +121,8 @@ class _SignUpState extends State<SignUp> {
                   ),
                 ),
                 //or
-                Row(
-                  children: const [
+                const Row(
+                  children: [
                     Expanded(
                       child: Divider(
                         color: Colors.grey,

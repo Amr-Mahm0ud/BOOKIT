@@ -6,7 +6,7 @@ import '../screens/booking/ticket_screen.dart';
 
 class TicketTile extends StatelessWidget {
   final Ticket ticket;
-  const TicketTile({Key? key, required this.ticket}) : super(key: key);
+  const TicketTile({super.key, required this.ticket});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class TicketTile extends StatelessWidget {
           ),
           Text(
             ticket.selectedMovieName!,
-            style: Get.textTheme.headline5!,
+            style: Get.textTheme.headlineSmall!,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

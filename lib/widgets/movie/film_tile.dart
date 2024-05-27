@@ -9,14 +9,14 @@ import '../../screens/movies/movie_details.dart';
 class FilmTile extends StatelessWidget {
   final Movie movie;
 
-  const FilmTile({Key? key, required this.movie}) : super(key: key);
+  const FilmTile({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context) {
     final subtitleStyle = Theme.of(context)
         .textTheme
-        .subtitle2!
-        .copyWith(color: Theme.of(context).textTheme.headline4!.color);
+        .titleSmall!
+        .copyWith(color: Theme.of(context).textTheme.headlineMedium!.color);
     return GestureDetector(
       onTap: () {
         MovieController.id = movie.id.toString();

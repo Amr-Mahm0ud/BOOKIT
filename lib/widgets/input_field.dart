@@ -8,12 +8,12 @@ class InputField extends StatelessWidget {
   final String hint;
 
   const InputField({
-    Key? key,
+    super.key,
     required this.keyType,
     required this.validator,
     required this.onSave,
     required this.hint,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

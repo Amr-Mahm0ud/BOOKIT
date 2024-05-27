@@ -7,8 +7,7 @@ class BottomNavBar extends StatelessWidget {
   final int currentIndex;
   final void Function(int) onTap;
   const BottomNavBar(
-      {Key? key, required this.currentIndex, required this.onTap})
-      : super(key: key);
+      {super.key, required this.currentIndex, required this.onTap});
 
   @override
   Widget build(BuildContext context) {

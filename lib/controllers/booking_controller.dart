@@ -54,7 +54,7 @@ class BookingController extends GetxController {
       Get.snackbar(
         "Error",
         e.toString(),
-        backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+        backgroundColor: Get.theme.colorScheme.error.withOpacity(0.5),
         colorText: Colors.white,
       );
       return null;
@@ -92,7 +92,7 @@ class BookingController extends GetxController {
       Get.snackbar(
         "Error",
         e.toString(),
-        backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+        backgroundColor: Get.theme.colorScheme.error.withOpacity(0.5),
         colorText: Colors.white,
       );
     }

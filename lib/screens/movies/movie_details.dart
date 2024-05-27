@@ -12,7 +12,7 @@ import '../../widgets/movie/film_card.dart';
 import 'all_movies.dart';
 
 class MovieDetails extends StatelessWidget {
-  const MovieDetails({Key? key}) : super(key: key);
+  const MovieDetails({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +121,7 @@ class MovieDetails extends StatelessWidget {
                               horizontal: Get.width * 0.05),
                           child: Text(
                             controller.movie.value.title.toString(),
-                            style: Get.textTheme.headline4!
+                            style: Get.textTheme.headlineMedium!
                                 .copyWith(color: Get.theme.iconTheme.color),
                           ),
                         ),
@@ -229,7 +229,7 @@ class MovieDetails extends StatelessWidget {
                         thickness: 1,
                       ),
                       //overview
-                      Text('Overview', style: Get.textTheme.headline5),
+                      Text('Overview', style: Get.textTheme.headlineSmall),
                       Text(
                         controller.movie.value.overview.toString(),
                         style: Get.textTheme.titleMedium,
@@ -384,7 +384,7 @@ class MovieDetails extends StatelessWidget {
       children: [
         Text(
           '$title: ',
-          style: Get.textTheme.bodyText1!.copyWith(
+          style: Get.textTheme.bodyLarge!.copyWith(
             color: Get.theme.primaryColor,
           ),
         ),
@@ -396,7 +396,7 @@ class MovieDetails extends StatelessWidget {
               return Text('$item, ');
             }
           },
-        ).toList(),
+        ),
       ],
     );
   }

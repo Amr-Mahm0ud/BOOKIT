@@ -9,7 +9,7 @@ import '../../widgets/welcome/button.dart';
 import '../../widgets/welcome/logo.dart';
 
 class SignIN extends StatefulWidget {
-  const SignIN({Key? key}) : super(key: key);
+  const SignIN({super.key});
 
   @override
   State<SignIN> createState() => _SignINState();
@@ -117,8 +117,8 @@ class _SignINState extends State<SignIN> {
                 //or
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: Get.height * 0.03),
-                  child: Row(
-                    children: const [
+                  child: const Row(
+                    children: [
                       Expanded(
                         child: Divider(
                           color: Colors.grey,

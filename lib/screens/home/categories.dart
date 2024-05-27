@@ -6,7 +6,7 @@ import 'package:movie_app/controllers/db/tmdb_controller.dart';
 import '../movies/all_movies.dart';
 
 class Categories extends GetView<TMDBController> {
-  Categories({Key? key}) : super(key: key);
+  Categories({super.key});
   final List<String> genreImages = [
     'assets/images/genres/action.png',
     'assets/images/genres/adventure.png',
@@ -91,7 +91,7 @@ class Categories extends GetView<TMDBController> {
           const SizedBox(height: 10),
           Text(
             controller.allGenres[index].name.toString(),
-            style: Get.textTheme.headline6,
+            style: Get.textTheme.titleLarge,
           ),
         ],
       ),

@@ -55,7 +55,7 @@ class MovieController extends GetxController {
         Get.snackbar(
           'Error',
           'Something went wrong',
-          backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+          backgroundColor: Get.theme.colorScheme.error.withOpacity(0.5),
           colorText: Colors.white,
         );
       }
@@ -63,7 +63,7 @@ class MovieController extends GetxController {
       Get.snackbar(
         'Error',
         error.toString(),
-        backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+        backgroundColor: Get.theme.colorScheme.error.withOpacity(0.5),
         colorText: Colors.white,
       );
     }
@@ -80,7 +80,7 @@ class MovieController extends GetxController {
         Get.snackbar(
           'Error',
           'Something went wrong',
-          backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+          backgroundColor: Get.theme.colorScheme.error.withOpacity(0.5),
           colorText: Colors.white,
         );
       }
@@ -88,7 +88,7 @@ class MovieController extends GetxController {
       Get.snackbar(
         'Error',
         error.toString(),
-        backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+        backgroundColor: Get.theme.colorScheme.error.withOpacity(0.5),
         colorText: Colors.white,
       );
     }
@@ -106,7 +106,7 @@ class MovieController extends GetxController {
         Get.snackbar(
           'Error',
           'Something went wrong',
-          backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+          backgroundColor: Get.theme.colorScheme.error.withOpacity(0.5),
           colorText: Colors.white,
         );
       }
@@ -114,7 +114,7 @@ class MovieController extends GetxController {
       Get.snackbar(
         'Error',
         error.toString(),
-        backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+        backgroundColor: Get.theme.colorScheme.error.withOpacity(0.5),
         colorText: Colors.white,
       );
     }
@@ -140,7 +140,7 @@ class MovieController extends GetxController {
         Get.snackbar(
           'Error',
           'Something went wrong',
-          backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+          backgroundColor: Get.theme.colorScheme.error.withOpacity(0.5),
           colorText: Colors.white,
         );
       }
@@ -148,7 +148,7 @@ class MovieController extends GetxController {
       Get.snackbar(
         'Error',
         error.toString(),
-        backgroundColor: Get.theme.errorColor.withOpacity(0.5),
+        backgroundColor: Get.theme.colorScheme.error.withOpacity(0.5),
         colorText: Colors.white,
       );
     }

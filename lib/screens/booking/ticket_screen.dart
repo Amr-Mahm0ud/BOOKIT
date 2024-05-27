@@ -7,7 +7,7 @@ import 'package:movie_app/screens/home/main_page.dart';
 class TicketScreen extends StatelessWidget {
   final Ticket ticket;
 
-  const TicketScreen({Key? key, required this.ticket}) : super(key: key);
+  const TicketScreen({super.key, required this.ticket});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class TicketScreen extends StatelessWidget {
                     color: Get.textTheme.titleLarge!.color,
                   ),
                 ),
-                Text('This is your ticket.', style: Get.textTheme.headline6),
+                Text('This is your ticket.', style: Get.textTheme.titleLarge),
                 Container(
                   margin: EdgeInsets.all(Get.width * 0.05),
                   decoration: BoxDecoration(
@@ -74,7 +74,7 @@ class TicketScreen extends StatelessWidget {
                             ),
                             Text(
                               '${ticket.selectedType}',
-                              style: Get.textTheme.headline5!
+                              style: Get.textTheme.headlineSmall!
                                   .copyWith(color: Colors.grey),
                             ),
                             Divider(
@@ -90,9 +90,9 @@ class TicketScreen extends StatelessWidget {
                                     children: [
                                       Text(
                                         'Booking ID:',
-                                        style: Get.textTheme.headline6!
+                                        style: Get.textTheme.titleLarge!
                                             .copyWith(
-                                                color: Get.textTheme.headline4!
+                                                color: Get.textTheme.headlineMedium!
                                                     .color),
                                       ),
                                       Text(
@@ -127,7 +127,7 @@ class TicketScreen extends StatelessWidget {
                                           ),
                                           child: Text(
                                             '${ticket.selectedDate!.split(' ')[0].split('-')[2]} ${(ticket.selectedDate!.split(' ')[0]).split('-')[1]} ${(ticket.selectedDate!.split(' ')[0]).split('-')[0]}',
-                                            style: Get.textTheme.headline6!
+                                            style: Get.textTheme.titleLarge!
                                                 .copyWith(
                                               color: Colors.white,
                                             ),
@@ -138,7 +138,7 @@ class TicketScreen extends StatelessWidget {
                                           padding: const EdgeInsets.all(10),
                                           child: Text(
                                             '${ticket.selectedTime}',
-                                            style: Get.textTheme.headline6,
+                                            style: Get.textTheme.titleLarge,
                                             textAlign: TextAlign.center,
                                           ),
                                         ),
@@ -188,7 +188,7 @@ class TicketScreen extends StatelessWidget {
         children: [
           Text(
             title,
-            style: Get.textTheme.headline6!.copyWith(color: Colors.grey),
+            style: Get.textTheme.titleLarge!.copyWith(color: Colors.grey),
           ),
           const Spacer(),
           Container(
@@ -197,7 +197,7 @@ class TicketScreen extends StatelessWidget {
             child: Text(
               value,
               overflow: TextOverflow.ellipsis,
-              style: Get.textTheme.headline6,
+              style: Get.textTheme.titleLarge,
             ),
           ),
         ],

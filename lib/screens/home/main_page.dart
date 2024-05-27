@@ -15,7 +15,7 @@ import '../../controllers/home/home_controller.dart';
 import 'favorites.dart';
 
 class MainPage extends StatelessWidget {
-  MainPage({Key? key}) : super(key: key);
+  MainPage({super.key});
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 

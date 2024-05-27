@@ -10,7 +10,7 @@ class FilmCard extends StatelessWidget {
   final Movie movie;
   final void Function()? onTap;
 
-  const FilmCard({Key? key, required this.movie, this.onTap}) : super(key: key);
+  const FilmCard({super.key, required this.movie, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +57,7 @@ class FilmCard extends StatelessWidget {
                     ? Center(
                         child: Text(
                           'No Image',
-                          style: Get.textTheme.headline4,
+                          style: Get.textTheme.headlineMedium,
                         ),
                       )
                     : null,

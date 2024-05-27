@@ -8,7 +8,7 @@ import '../widgets/welcome/logo.dart';
 import 'auth/sign_up.dart';
 
 class WelcomeScreen extends StatefulWidget {
-  const WelcomeScreen({Key? key}) : super(key: key);
+  const WelcomeScreen({super.key});
 
   @override
   State<WelcomeScreen> createState() => _WelcomeScreenState();
@@ -83,7 +83,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 'Enjoy best movies, events or activities via BOOKIT.',
                 style: Theme.of(context)
                     .textTheme
-                    .headline6!
+                    .titleLarge!
                     .copyWith(color: Colors.grey[700]),
                 textAlign: TextAlign.center,
               ),

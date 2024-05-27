@@ -4,8 +4,7 @@ class Indicator extends StatelessWidget {
   final List images;
   final int index;
 
-  const Indicator({Key? key, required this.images, required this.index})
-      : super(key: key);
+  const Indicator({super.key, required this.images, required this.index});
 
   @override
   Widget build(BuildContext context) {
