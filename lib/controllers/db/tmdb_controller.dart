@@ -43,6 +43,8 @@ class TMDBController extends GetxController {
     await getFavorites();
     if (favorites.isNotEmpty) {
       await fetchRecommendations(favorites.last.id);
+    } else {
+      await fetchRecommendations(topRatedList.first.movies!.first.id);
     }
     isLoading(false);
   }

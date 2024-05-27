@@ -158,7 +158,7 @@ class MainPage extends StatelessWidget {
               ),
               SizedBox(height: Get.height * 0.015),
               //----------------------------------
-              if (tmdbcontroller.recommendations.first.movies!.isNotEmpty) ...[
+              if (tmdbcontroller.recommendations.isNotEmpty) ...[
                 SectionHead(
                   title: 'Recommendations',
                   list: tmdbcontroller.recommendations.first.movies!,
