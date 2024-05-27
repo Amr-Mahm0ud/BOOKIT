@@ -18,10 +18,7 @@ class MovieDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     final MovieController controller = Get.find<MovieController>();
     final TMDBController tmdbcontroller = Get.find<TMDBController>();
-    return
-        // YoutubePlayerBuilder(
-        //   builder: (p0, p1) =>
-        Scaffold(
+    return Scaffold(
       body: Obx(
         () {
           if (controller.isLoading.value) {
@@ -71,6 +68,8 @@ class MovieDetails extends StatelessWidget {
                               color: Colors.white,
                             ),
                             onPressed: () {
+                              controller.videoController.dispose();
+                              controller.dispose();
                               Get.back();
                             },
                           ),
@@ -175,8 +174,23 @@ class MovieDetails extends StatelessWidget {
                                   : null,
                             ),
                             child: controller.videos.isNotEmpty
-                                ? YoutubePlayer(
-                                    controller: controller.videoController)
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(15),
+                                    child: YoutubePlayer(
+                                      controller: controller.videoController,
+                                      bottomActions: [
+                                        const SizedBox(width: 14.0),
+                                        CurrentPosition(),
+                                        const SizedBox(width: 8.0),
+                                        ProgressBar(isExpanded: true),
+                                        RemainingDuration(),
+                                        const PlaybackSpeedButton(),
+                                      ],
+                                      thumbnail: Image.network(
+                                        controller.movie.value.backdropPath!,
+                                      ),
+                                    ),
+                                  )
                                 : null,
                           ),
                         ),
@@ -318,36 +332,7 @@ class MovieDetails extends StatelessWidget {
           );
         },
       ),
-    ); // player: YoutubePlayer(
-    //   controller: controller.videoController,
-    //   showVideoProgressIndicator: true,
-    //   progressIndicatorColor: Colors.blueAccent,
-    //   topActions: <Widget>[
-    //     const SizedBox(width: 8.0),
-    //     Expanded(
-    //       child: Text(
-    //         controller.videoController.metadata.title,
-    //         style: const TextStyle(
-    //           color: Colors.white,
-    //           fontSize: 18.0,
-    //         ),
-    //         overflow: TextOverflow.ellipsis,
-    //         maxLines: 1,
-    //       ),
-    //     ),
-    //     IconButton(
-    //       icon: const Icon(
-    //         Icons.settings,
-    //         color: Colors.white,
-    //         size: 25.0,
-    //       ),
-    //       onPressed: () {
-    //         log('Settings Tapped!');
-    //       },
-    //     ),
-    //   ],
-    // ),
-    // );
+    );
   }
 
   sectionBodyFromDetails(list, controller, {padding}) {
