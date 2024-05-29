@@ -15,7 +15,7 @@ class FilmCard2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: Get.height * 0.325,
+      height: Get.height * 0.26,
       child: GestureDetector(
         onTap: () {
           MovieController.id = movie.id.toString();

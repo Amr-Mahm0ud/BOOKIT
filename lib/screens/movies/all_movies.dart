@@ -26,8 +26,7 @@ class AllMovies extends GetView<TMDBController> {
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemBuilder: (context, index) {
-              return FilmTile(
-                  movie: controller.allMoviesList.first.movies![index]);
+              return FilmTile(movie: list[index]);
             },
             separatorBuilder: (_, index) {
               return const SizedBox(height: 20);

@@ -26,6 +26,7 @@ class TMDBController extends GetxController {
   RxList<MovieList> upcomingList = <MovieList>[].obs;
   RxList<MovieList> allMoviesList = <MovieList>[].obs;
   RxList<MovieList> recommendations = <MovieList>[].obs;
+  RxList<MovieList> searchResults = <MovieList>[].obs;
 
   RxList<Genre> allGenres = <Genre>[].obs;
   RxList<MovieList> moviesInGenre = <MovieList>[].obs;
@@ -382,5 +383,35 @@ class TMDBController extends GetxController {
         colorText: Colors.white,
       );
     });
+  }
+
+  searchByMovieName(String movieName) async {
+    isLoading(true);
+    searchResults.clear();
+    try {
+      var res =
+          await http.get(Uri.parse('${EndPoints.searchByName}$movieName'));
+      if (res.statusCode == 200) {
+        var body = jsonDecode(res.body);
+        print(body);
+        searchResults.add(MovieList.fromJson(body));
+      } else {
+        Get.snackbar(
+          'Error',
+          'Something went wrong',
+          backgroundColor: Get.theme.colorScheme.error.withOpacity(0.5),
+          colorText: Colors.white,
+        );
+      }
+    } catch (error) {
+      Get.snackbar(
+        'Error',
+        error.toString(),
+        backgroundColor: Get.theme.colorScheme.error.withOpacity(0.5),
+        colorText: Colors.white,
+      );
+    }
+    isLoading(false);
+    update();
   }
 }

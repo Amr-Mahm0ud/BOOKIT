@@ -91,7 +91,7 @@ class MainPage extends StatelessWidget {
     );
   }
 
-  Expanded searchBar(context) {
+  Widget searchBar(context) {
     final border = OutlineInputBorder(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(Get.width),
@@ -113,14 +113,25 @@ class MainPage extends StatelessWidget {
           ),
         ),
         child: TextFormField(
-          // controller: searchController,
+          controller: controller.searchController,
+          onChanged: (val) {
+            controller.changeSearchValue(val);
+          },
           autocorrect: true,
           keyboardType: TextInputType.text,
           decoration: InputDecoration(
             contentPadding: EdgeInsets.symmetric(vertical: Get.height * 0.029),
-            prefixIcon:
-                Icon(Icons.search_rounded, color: Get.theme.primaryColor),
-            hintText: 'Search for movies..',
+            prefixIcon: IconButton(
+              color: Get.theme.primaryColor,
+              onPressed: controller.searchValue.isEmpty
+                  ? null
+                  : () {
+                      tmdbController.searchByMovieName(
+                          controller.searchValue.value.trim());
+                    },
+              icon: const Icon(Icons.search_rounded),
+            ),
+            hintText: 'Search for movies...',
             border: InputBorder.none,
             enabledBorder: border,
             disabledBorder: border,
@@ -135,9 +146,8 @@ class MainPage extends StatelessWidget {
     );
   }
 
-  buildHomeBody(context, controller) {
+  buildHomeBody(context, HomeController controller) {
     final TMDBController tmdbcontroller = Get.find<TMDBController>();
-
     return SingleChildScrollView(
       child: SafeArea(
         child: Padding(
@@ -150,70 +160,83 @@ class MainPage extends StatelessWidget {
                 children: [drawerIcon(controller), searchBar(context)],
               ),
               SizedBox(height: Get.height * 0.015),
+              ...(controller.searchController.text.isNotEmpty)
+                  ? [
+                      tmdbcontroller.searchResults.isEmpty
+                          ? Container()
+                          : AllMovies(
+                              asWidget: true,
+                              list: tmdbcontroller.searchResults.first.movies!,
+                            ),
+                    ]
+                  : [
+                      //----------------------------------
+                      //Recommendations
+                      if (tmdbcontroller.recommendations.isNotEmpty) ...[
+                        SectionHead(
+                          title: 'Recommendations',
+                          list: tmdbcontroller.recommendations.first.movies!,
+                        ),
+                        sectionBody2(
+                            tmdbcontroller.recommendations.first.movies!),
+                      ],
 
-              //----------------------------------
-              //Recommendations
-              if (tmdbcontroller.recommendations.isNotEmpty) ...[
-                SectionHead(
-                  title: 'Recommendations',
-                  list: tmdbcontroller.recommendations.first.movies!,
-                ),
-                sectionBody2(tmdbcontroller.recommendations.first.movies!),
-              ],
+                      //----------------------------------
+                      //UpComing
+                      SectionHead(
+                        title: 'Upcoming',
+                        list: tmdbcontroller.upcomingList.first.movies!,
+                      ),
+                      sectionBody2(tmdbcontroller.upcomingList.first.movies!),
 
-              //----------------------------------
-              //UpComing
-              SectionHead(
-                title: 'Upcoming',
-                list: tmdbcontroller.upcomingList.first.movies!,
-              ),
-              sectionBody2(tmdbcontroller.upcomingList.first.movies!),
+                      //----------------------------------
+                      //Trending
+                      SectionHead(
+                        title: 'Top Trending',
+                        list: tmdbcontroller.trendingList.first.movies!,
+                      ),
+                      sectionBody2(tmdbcontroller
+                          .trendingList.first.movies!.reversed
+                          .toList()),
 
-              //----------------------------------
-              //Trending
-              SectionHead(
-                title: 'Top Trending',
-                list: tmdbcontroller.trendingList.first.movies!,
-              ),
-              sectionBody2(
-                  tmdbcontroller.trendingList.first.movies!.reversed.toList()),
+                      //----------------------------------
+                      //Popular
+                      SectionHead(
+                        title: 'Popular',
+                        list: tmdbcontroller.popularList.first.movies!,
+                      ),
+                      SectionBody(tmdbcontroller.popularList.first.movies!),
 
-              //----------------------------------
-              //Popular
-              SectionHead(
-                title: 'Popular',
-                list: tmdbcontroller.popularList.first.movies!,
-              ),
-              SectionBody(tmdbcontroller.popularList.first.movies!),
+                      //----------------------------------
+                      //Top Rated
+                      SectionHead(
+                        title: 'Top Rated',
+                        list: tmdbcontroller.topRatedList.first.movies!,
+                      ),
+                      SectionBody(tmdbcontroller.topRatedList.first.movies!),
 
-              //----------------------------------
-              //Top Rated
-              SectionHead(
-                title: 'Top Rated',
-                list: tmdbcontroller.topRatedList.first.movies!,
-              ),
-              SectionBody(tmdbcontroller.topRatedList.first.movies!),
+                      //----------------------------------
+                      //Now Playing
+                      SectionHead(
+                        title: 'Now Playing',
+                        list: tmdbcontroller.nowPlayingList.first.movies!,
+                      ),
+                      sectionBody2(
+                        tmdbcontroller.nowPlayingList.first.movies!.reversed
+                            .toList(),
+                      ),
 
-              //----------------------------------
-              //Now Playing
-              SectionHead(
-                title: 'Now Playing',
-                list: tmdbcontroller.nowPlayingList.first.movies!,
-              ),
-              sectionBody2(
-                tmdbcontroller.nowPlayingList.first.movies!.reversed.toList(),
-              ),
-
-              //----------------------------------
-              //All Movies
-              SectionHead(
-                title: 'All Movies',
-                list: tmdbcontroller.allMoviesList.first.movies!,
-              ),
-              AllMovies(
-                asWidget: true,
-                list: tmdbcontroller.allMoviesList.first.movies!,
-              ),
+                      //----------------------------------
+                      //All Movies
+                      SectionHead(
+                        title: 'All Movies',
+                        list: tmdbcontroller.allMoviesList.first.movies!,
+                      ),
+                      AllMovies(
+                        asWidget: true,
+                        list: tmdbcontroller.allMoviesList.first.movies!,
+                      ),
+                    ]
             ],
           ),
         ),

@@ -12,4 +12,5 @@ class EndPoints {
   static const upcoming = '$baseURL/movie/upcoming?api_key=$apiKey';
   static const allMovies = '$baseURL/discover/movie?api_key=$apiKey';
   static const allGenres = '$baseURL/genre/movie/list?api_key=$apiKey';
+  static const searchByName = '$baseURL/search/movie?api_key=$apiKey&query=';
 }
