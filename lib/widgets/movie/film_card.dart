@@ -6,6 +6,7 @@ import 'package:movie_app/models/movie.dart';
 
 import '../../screens/movies/movie_details.dart';
 
+//The Vertical Card used in Movie Details Screen, Popular & Top Rated
 class FilmCard extends StatelessWidget {
   final Movie movie;
   final void Function()? onTap;
@@ -30,10 +31,8 @@ class FilmCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Material(
-              elevation: 15,
-              shadowColor: Get.isDarkMode
-                  ? Get.theme.primaryColor.withOpacity(0.4)
-                  : Get.theme.shadowColor,
+              elevation: 10,
+              shadowColor: Get.theme.primaryColor.withOpacity(0.3),
               borderRadius: BorderRadius.circular(15),
               child: Container(
                 width: Get.width * 0.38,
@@ -48,7 +47,7 @@ class FilmCard extends StatelessWidget {
                                 ? movie.backdropPath!.toString()
                                 : movie.posterPath!.toString(),
                           ),
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                         )
                       : null,
                 ),

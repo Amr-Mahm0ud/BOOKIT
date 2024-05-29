@@ -187,6 +187,7 @@ class MovieDetails extends StatelessWidget {
                                         const PlaybackSpeedButton(),
                                       ],
                                       thumbnail: Image.network(
+                                        fit: BoxFit.fill,
                                         controller.movie.value.backdropPath!,
                                       ),
                                     ),

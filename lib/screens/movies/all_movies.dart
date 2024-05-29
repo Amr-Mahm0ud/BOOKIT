@@ -22,6 +22,7 @@ class AllMovies extends GetView<TMDBController> {
   Widget build(BuildContext context) {
     return asWidget
         ? ListView.separated(
+            padding: EdgeInsets.symmetric(horizontal: Get.size.width * 0.05),
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemBuilder: (context, index) {
@@ -29,7 +30,7 @@ class AllMovies extends GetView<TMDBController> {
                   movie: controller.allMoviesList.first.movies![index]);
             },
             separatorBuilder: (_, index) {
-              return const Divider();
+              return const SizedBox(height: 20);
             },
             itemCount: 10)
         : Scaffold(

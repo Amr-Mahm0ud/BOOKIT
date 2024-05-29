@@ -74,26 +74,34 @@ class Categories extends GetView<TMDBController> {
         });
   }
 
-  Card buildGenre(int index) {
-    return Card(
+  Widget buildGenre(int index) {
+    return Material(
       elevation: 10,
+      color: Get.theme.cardColor,
       shadowColor: Get.theme.primaryColor.withOpacity(0.2),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            genreImages[index],
-            color: Get.theme.primaryColor,
-          ),
-          const SizedBox(height: 10),
-          Text(
-            controller.allGenres[index].name.toString(),
-            style: Get.textTheme.titleLarge,
-          ),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              genreImages[index],
+              color: Get.theme.primaryColor,
+              width: Get.size.width * 0.2,
+            ),
+            const SizedBox(height: 10),
+            Text(
+              controller.allGenres[index].name.toString(),
+              style: Get.textTheme.titleMedium!
+                  .copyWith(fontWeight: FontWeight.bold),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
       ),
     );
   }

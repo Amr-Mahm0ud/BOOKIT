@@ -18,6 +18,7 @@ class Button extends StatelessWidget {
     return ElevatedButton(
       style: border
           ? OutlinedButton.styleFrom(
+              backgroundColor: Colors.transparent,
               elevation: 0,
               fixedSize: Size(Get.width, Get.height * 0.075),
               shape: RoundedRectangleBorder(
@@ -28,6 +29,7 @@ class Button extends StatelessWidget {
             )
           : ElevatedButton.styleFrom(
               elevation: 15,
+              backgroundColor: Theme.of(context).colorScheme.primary,
               fixedSize: Size(Get.width, Get.height * 0.075),
               shadowColor: Theme.of(context).primaryColor.withOpacity(0.5),
               shape: RoundedRectangleBorder(

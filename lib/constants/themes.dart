@@ -1,43 +1,56 @@
 import 'package:flutter/material.dart';
 
-const Color primaryClr = Color(0xff2DA8FF);
-const Color secondaryClr = Color(0xffB06AB3);
-const Color backLight = Color(0xFFF5F5F5);
-const Color backDark = Color(0xFF000000);
-const Color grayShade = Color(0xFF323232);
-const Color white = Color(0xFFFFFFFF);
+const Color lightPrimary = Color(0xff4196e0);
+const Color lightSecondaryClr = Color(0xff32769b);
+const Color backLight = Color(0xFFf5f5f5);
+const Color lightGrayShade = Color(0xFFf5f4f1);
+const Color lightText = Color(0xFF2c2c2c);
+
+const Color darkPrimary = Color(0xff4196e0);
+const Color darkSecondaryClr = Color(0xff32769b);
+const Color backDark = Color(0xFF1A1A1A);
+const Color darkGrayShade = Color(0xFF292929);
+const Color darkText = Color(0xFFe0e0e0);
 
 class Themes {
   static final lightTheme = ThemeData.light().copyWith(
-    primaryColor: primaryClr,
-    splashColor: primaryClr,
+    primaryColor: lightPrimary,
+    splashColor: lightPrimary,
     brightness: Brightness.light,
     scaffoldBackgroundColor: backLight,
-    cardColor: white,
+    cardColor: lightGrayShade,
     appBarTheme: const AppBarTheme(
-        elevation: 0, foregroundColor: backDark, color: backLight),
-    textTheme: ThemeData.light().textTheme.apply(fontFamily: 'Nunito'),
+      elevation: 0,
+      foregroundColor: lightText,
+      backgroundColor: backLight,
+    ),
+    textTheme: ThemeData.light().textTheme.apply(displayColor: lightText),
+    cardTheme: ThemeData.light().cardTheme.copyWith(color: lightGrayShade),
     colorScheme: const ColorScheme.light()
         .copyWith(
-          primary: primaryClr,
-          secondary: secondaryClr,
+          primary: lightPrimary,
+          secondary: lightSecondaryClr,
           error: Colors.redAccent,
         )
         .copyWith(background: backLight),
   );
   static final darkTheme = ThemeData.dark().copyWith(
-    primaryColor: primaryClr,
-    splashColor: primaryClr,
+    primaryColor: darkPrimary,
+    splashColor: darkPrimary,
     brightness: Brightness.dark,
     scaffoldBackgroundColor: backDark,
-    cardColor: grayShade,
+    cardColor: darkGrayShade,
     appBarTheme: const AppBarTheme(
-        elevation: 0, foregroundColor: white, color: backDark),
-    textTheme: ThemeData.dark().textTheme.apply(fontFamily: 'Nunito'),
+      elevation: 0,
+      foregroundColor: darkText,
+      backgroundColor: backDark,
+    ),
+    textTheme: ThemeData.dark().textTheme.apply(displayColor: darkText),
+    cardTheme: ThemeData.light().cardTheme.copyWith(color: darkGrayShade),
     colorScheme: const ColorScheme.dark()
         .copyWith(
-          primary: primaryClr,
-          secondary: secondaryClr,
+          primary: darkPrimary,
+          secondary: darkSecondaryClr,
           error: Colors.redAccent,
         )
         .copyWith(background: backDark),

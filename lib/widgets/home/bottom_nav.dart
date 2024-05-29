@@ -18,8 +18,8 @@ class BottomNavBar extends StatelessWidget {
       ),
       child: BackdropFilter(
         filter: ImageFilter.blur(
-          sigmaX: 15,
-          sigmaY: 15,
+          sigmaX: 10,
+          sigmaY: 50,
         ),
         child: BottomNavigationBar(
           elevation: 0,
@@ -29,9 +29,7 @@ class BottomNavBar extends StatelessWidget {
               .copyWith(color: Theme.of(context).primaryColor, size: 35),
           enableFeedback: true,
           unselectedItemColor: Theme.of(context).primaryColor.withOpacity(0.5),
-          backgroundColor: Get.isDarkMode
-              ? Get.theme.cardColor.withOpacity(0.5)
-              : Get.theme.primaryColor.withOpacity(0.1),
+          backgroundColor: Get.theme.primaryColor.withOpacity(0.1),
           type: BottomNavigationBarType.fixed,
           currentIndex: currentIndex,
           onTap: (val) {

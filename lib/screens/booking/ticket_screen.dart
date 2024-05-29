@@ -38,7 +38,7 @@ class TicketScreen extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.all(Get.width * 0.05),
                   decoration: BoxDecoration(
-                    color: Get.theme.cardColor,
+                    color: Get.theme.cardColor.withOpacity(0.3),
                     borderRadius: BorderRadius.circular(Get.width * 0.03),
                     border: Border.all(
                       color: Get.theme.dividerColor,
@@ -92,8 +92,8 @@ class TicketScreen extends StatelessWidget {
                                         'Booking ID:',
                                         style: Get.textTheme.titleLarge!
                                             .copyWith(
-                                                color: Get.textTheme.headlineMedium!
-                                                    .color),
+                                                color: Get.textTheme
+                                                    .headlineMedium!.color),
                                       ),
                                       Text(
                                         '${ticket.id}',

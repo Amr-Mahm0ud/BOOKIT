@@ -26,11 +26,9 @@ class TicketTile extends StatelessWidget {
             child: AspectRatio(
               aspectRatio: 16 / 9,
               child: Material(
-                elevation: 20,
+                elevation: 15,
                 borderRadius: BorderRadius.circular(15),
-                shadowColor: Get.isDarkMode
-                    ? Get.theme.primaryColor.withOpacity(0.3)
-                    : Get.theme.shadowColor,
+                shadowColor: Get.theme.primaryColor.withOpacity(0.3),
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),

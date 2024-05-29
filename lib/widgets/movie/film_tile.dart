@@ -25,62 +25,60 @@ class FilmTile extends StatelessWidget {
           binding: MovieBinding(),
         );
       },
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-            child: Material(
-              elevation: 10,
-              borderRadius: BorderRadius.circular(15),
-              child: Container(
+      child: SizedBox(
+        height: Get.height * 0.15,
+        child: Material(
+          borderRadius: BorderRadius.circular(15),
+          shadowColor: Get.theme.primaryColor.withOpacity(0.25),
+          elevation: 10,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
                 width: Get.width * 0.33,
-                height: Get.height * 0.225,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      bottomLeft: Radius.circular(15)),
                   image: DecorationImage(
                     image: NetworkImage(
                       movie.posterPath.toString(),
                     ),
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                   ),
                 ),
               ),
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 5, bottom: 5, right: 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    movie.title.toString(),
-                    style: Theme.of(context).textTheme.titleMedium,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text('${movie.releaseDate}, ${movie.originalLanguage}',
-                      style: subtitleStyle),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+              Expanded(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(double.parse(movie.voteAverage.toString())
-                          .toStringAsFixed(2)),
-                      const Icon(Icons.star, color: Colors.amber),
+                      Text(
+                        movie.title.toString(),
+                        style: Theme.of(context).textTheme.titleMedium,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text('${movie.releaseDate}, ${movie.originalLanguage}',
+                          style: subtitleStyle),
+                      Text('${movie.voteCount}, Votes'),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(double.parse(movie.voteAverage.toString())
+                              .toStringAsFixed(2)),
+                          const Icon(Icons.star, color: Colors.amber),
+                        ],
+                      )
                     ],
                   ),
-                  Text(
-                    '${movie.overview}',
-                    style: subtitleStyle,
-                    maxLines: 5,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

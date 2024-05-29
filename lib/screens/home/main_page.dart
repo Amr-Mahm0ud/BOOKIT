@@ -18,20 +18,13 @@ class MainPage extends StatelessWidget {
   MainPage({super.key});
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  final controller = Get.find<HomeController>();
+  final tmdbController = Get.find<TMDBController>();
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<HomeController>();
-    final tmdbController = Get.find<TMDBController>();
-
     return Obx(
       () {
-        // if ((tmdbController.allMoviesList.isEmpty ||
-        //     tmdbController.topRatedList.isEmpty ||
-        //     tmdbController.trendingList.isEmpty ||
-        //     tmdbController.nowPlayingList.isEmpty ||
-        //     tmdbController.popularList.isEmpty ||
-        //     tmdbController.upcomingList.isEmpty)) {
         if (tmdbController.isLoading.value) {
           return Scaffold(
             body: Center(
@@ -55,7 +48,7 @@ class MainPage extends StatelessWidget {
             body: SafeArea(
               child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 500),
-                child: switchBody(),
+                child: switchBody(context),
               ),
             ),
             drawer: controller.currentPage.value == 0 ? const MyDrawer() : null,
@@ -98,7 +91,7 @@ class MainPage extends StatelessWidget {
     );
   }
 
-  Expanded searchBar() {
+  Expanded searchBar(context) {
     final border = OutlineInputBorder(
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(Get.width),
@@ -135,7 +128,7 @@ class MainPage extends StatelessWidget {
             focusedErrorBorder: border,
             focusedBorder: border,
             filled: true,
-            fillColor: Get.theme.cardTheme.color,
+            fillColor: Theme.of(context).cardColor,
           ),
         ),
       ),
@@ -154,48 +147,55 @@ class MainPage extends StatelessWidget {
               //drawer & search bar
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [drawerIcon(controller), searchBar()],
+                children: [drawerIcon(controller), searchBar(context)],
               ),
               SizedBox(height: Get.height * 0.015),
+
               //----------------------------------
+              //Recommendations
               if (tmdbcontroller.recommendations.isNotEmpty) ...[
                 SectionHead(
                   title: 'Recommendations',
                   list: tmdbcontroller.recommendations.first.movies!,
                 ),
                 sectionBody2(tmdbcontroller.recommendations.first.movies!),
-                const Divider(),
-              ], //----------------------------------
+              ],
+
+              //----------------------------------
+              //UpComing
               SectionHead(
                 title: 'Upcoming',
                 list: tmdbcontroller.upcomingList.first.movies!,
               ),
               sectionBody2(tmdbcontroller.upcomingList.first.movies!),
-              const Divider(),
+
               //----------------------------------
+              //Trending
               SectionHead(
                 title: 'Top Trending',
                 list: tmdbcontroller.trendingList.first.movies!,
               ),
               sectionBody2(
-                tmdbcontroller.trendingList.first.movies!.reversed.toList(),
-              ),
-              const Divider(),
+                  tmdbcontroller.trendingList.first.movies!.reversed.toList()),
+
               //----------------------------------
+              //Popular
               SectionHead(
                 title: 'Popular',
                 list: tmdbcontroller.popularList.first.movies!,
               ),
               SectionBody(tmdbcontroller.popularList.first.movies!),
-              const Divider(),
+
               //----------------------------------
+              //Top Rated
               SectionHead(
                 title: 'Top Rated',
                 list: tmdbcontroller.topRatedList.first.movies!,
               ),
               SectionBody(tmdbcontroller.topRatedList.first.movies!),
-              const Divider(),
+
               //----------------------------------
+              //Now Playing
               SectionHead(
                 title: 'Now Playing',
                 list: tmdbcontroller.nowPlayingList.first.movies!,
@@ -203,8 +203,9 @@ class MainPage extends StatelessWidget {
               sectionBody2(
                 tmdbcontroller.nowPlayingList.first.movies!.reversed.toList(),
               ),
-              const Divider(),
+
               //----------------------------------
+              //All Movies
               SectionHead(
                 title: 'All Movies',
                 list: tmdbcontroller.allMoviesList.first.movies!,
@@ -213,7 +214,6 @@ class MainPage extends StatelessWidget {
                 asWidget: true,
                 list: tmdbcontroller.allMoviesList.first.movies!,
               ),
-              //----------------------------------
             ],
           ),
         ),
@@ -222,27 +222,25 @@ class MainPage extends StatelessWidget {
   }
 
   sectionBody2(List<Movie> list) {
-    return SizedBox(
-      height: Get.height * 0.325,
-      width: double.infinity,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        physics: const BouncingScrollPhysics(),
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      physics: const BouncingScrollPhysics(),
+      child: Row(
         children: list.map((movie) => FilmCard2(movie: movie)).toList(),
       ),
     );
   }
 
-  switchBody() {
+  switchBody(context) {
     switch (Get.find<HomeController>().currentPage.value) {
       case 0:
-        return buildHomeBody(Get.context, Get.find<HomeController>());
+        return buildHomeBody(context, Get.find<HomeController>());
       case 1:
         return Categories();
       case 2:
         return const Favorites();
       default:
-        return buildHomeBody(Get.context, Get.find<HomeController>());
+        return buildHomeBody(context, Get.find<HomeController>());
     }
   }
 }
