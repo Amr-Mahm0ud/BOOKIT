@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:movie_app/bindings/fetch_more_binding.dart';
+import 'package:movie_app/controllers/all_movies_controller.dart';
 import 'package:movie_app/controllers/db/movie_controller.dart';
 import 'package:movie_app/controllers/db/tmdb_controller.dart';
 import 'package:movie_app/screens/booking/booking.dart';
@@ -205,17 +207,17 @@ class MovieDetails extends StatelessWidget {
                                   onTap: () async {
                                     await tmdbcontroller
                                         .getMoviesInGenre(genre.id)
-                                        .then((_) => Get.to(
-                                              () => AllMovies(
-                                                asWidget: false,
-                                                title: genre.name,
-                                                genreId: genre.id,
-                                                list: tmdbcontroller
-                                                    .moviesInGenre
-                                                    .first
-                                                    .movies!,
-                                              ),
-                                            ));
+                                        .then(
+                                          (_) => Get.to(
+                                            () => AllMovies(
+                                              asWidget: false,
+                                              title: genre.name,
+                                              genreId: genre.id,
+                                              list:
+                                                  tmdbcontroller.moviesInGenre,
+                                            ),
+                                          ),
+                                        );
                                   },
                                   child: Container(
                                     margin: const EdgeInsets.symmetric(
@@ -274,15 +276,16 @@ class MovieDetails extends StatelessWidget {
                         SectionHead(
                           title: 'Similar Movies',
                           details: true,
-                          list: controller.similarMovies.first.movies!,
+                          list: controller.similarMovies,
+                          listName: ListNames.similar,
                           onTap: () {
                             Get.off(
-                              () => AllMovies(
-                                asWidget: false,
-                                title: 'Similar Movies',
-                                list: controller.similarMovies.first.movies!,
-                              ),
-                            );
+                                () => AllMovies(
+                                      asWidget: false,
+                                      title: 'Similar Movies',
+                                      list: controller.similarMovies,
+                                    ),
+                                binding: FetchMoreBinding(ListNames.similar));
                           },
                         ),
                         sectionBodyFromDetails(
@@ -296,13 +299,17 @@ class MovieDetails extends StatelessWidget {
                         SectionHead(
                           title: 'Recommendations',
                           details: true,
-                          list: controller.recommendations.first.movies!,
+                          list: controller.recommendations,
+                          listName: ListNames.recommendations,
                           onTap: () {
                             Get.off(
                               () => AllMovies(
                                 asWidget: false,
                                 title: 'Recommendations',
-                                list: controller.recommendations.first.movies!,
+                                list: controller.recommendations,
+                              ),
+                              binding: FetchMoreBinding(
+                                ListNames.recommendations,
                               ),
                             );
                           },

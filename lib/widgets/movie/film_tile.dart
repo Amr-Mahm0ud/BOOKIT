@@ -13,10 +13,6 @@ class FilmTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final subtitleStyle = Theme.of(context)
-        .textTheme
-        .titleSmall!
-        .copyWith(color: Theme.of(context).textTheme.headlineMedium!.color);
     return GestureDetector(
       onTap: () {
         MovieController.id = movie.id.toString();
@@ -58,11 +54,10 @@ class FilmTile extends StatelessWidget {
                       Text(
                         movie.title.toString(),
                         style: Theme.of(context).textTheme.titleMedium,
-                        maxLines: 2,
+                        maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      Text('${movie.releaseDate}, ${movie.originalLanguage}',
-                          style: subtitleStyle),
+                      Text('${movie.releaseDate}, ${movie.originalLanguage}'),
                       Text('${movie.voteCount}, Votes'),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,

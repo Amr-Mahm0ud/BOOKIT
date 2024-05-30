@@ -25,24 +25,28 @@ class InputField extends StatelessWidget {
     );
     return Padding(
       padding: EdgeInsets.symmetric(vertical: Get.height * 0.01),
-      child: TextFormField(
-        textAlign: TextAlign.center,
-        obscureText: keyType == TextInputType.visiblePassword ? true : false,
-        autocorrect: true,
-        keyboardType: keyType,
-        validator: validator,
-        onSaved: onSave,
-        decoration: InputDecoration(
-          hintText: hint,
-          border: InputBorder.none,
-          enabledBorder: border,
-          disabledBorder: border,
-          errorBorder: border,
-          focusedErrorBorder: border,
-          focusedBorder: border,
-          filled: true,
-          fillColor: Theme.of(context).cardColor,
-          contentPadding: const EdgeInsets.symmetric(vertical: 20),
+      child: Material(
+        elevation: 1,
+        borderRadius: border.borderRadius,
+        child: TextFormField(
+          textAlign: TextAlign.center,
+          obscureText: keyType == TextInputType.visiblePassword ? true : false,
+          autocorrect: true,
+          keyboardType: keyType,
+          validator: validator,
+          onSaved: onSave,
+          decoration: InputDecoration(
+            hintText: hint,
+            border: InputBorder.none,
+            enabledBorder: border,
+            disabledBorder: border,
+            errorBorder: border,
+            focusedErrorBorder: border,
+            focusedBorder: border,
+            filled: true,
+            fillColor: Theme.of(context).cardColor,
+            contentPadding: const EdgeInsets.symmetric(vertical: 20),
+          ),
         ),
       ),
     );

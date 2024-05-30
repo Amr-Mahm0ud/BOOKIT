@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:movie_app/controllers/all_movies_controller.dart';
 import 'package:movie_app/controllers/db/tmdb_controller.dart';
 import 'package:movie_app/models/movie.dart';
 import 'package:movie_app/widgets/movie/film_card2.dart';
@@ -162,12 +163,14 @@ class MainPage extends StatelessWidget {
               SizedBox(height: Get.height * 0.015),
               ...(controller.searchController.text.isNotEmpty)
                   ? [
-                      tmdbcontroller.searchResults.isEmpty
-                          ? Container()
-                          : AllMovies(
-                              asWidget: true,
-                              list: tmdbcontroller.searchResults.first.movies!,
-                            ),
+                      tmdbcontroller.isSearching.value
+                          ? const LinearProgressIndicator()
+                          : tmdbcontroller.searchResults.isEmpty
+                              ? Container()
+                              : AllMovies(
+                                  asWidget: true,
+                                  list: tmdbcontroller.searchResults,
+                                ),
                     ]
                   : [
                       //----------------------------------
@@ -175,7 +178,8 @@ class MainPage extends StatelessWidget {
                       if (tmdbcontroller.recommendations.isNotEmpty) ...[
                         SectionHead(
                           title: 'Recommendations',
-                          list: tmdbcontroller.recommendations.first.movies!,
+                          list: tmdbcontroller.recommendations,
+                          listName: ListNames.recommendations,
                         ),
                         sectionBody2(
                             tmdbcontroller.recommendations.first.movies!),
@@ -185,7 +189,8 @@ class MainPage extends StatelessWidget {
                       //UpComing
                       SectionHead(
                         title: 'Upcoming',
-                        list: tmdbcontroller.upcomingList.first.movies!,
+                        list: tmdbcontroller.upcomingList,
+                        listName: ListNames.upcoming,
                       ),
                       sectionBody2(tmdbcontroller.upcomingList.first.movies!),
 
@@ -193,7 +198,8 @@ class MainPage extends StatelessWidget {
                       //Trending
                       SectionHead(
                         title: 'Top Trending',
-                        list: tmdbcontroller.trendingList.first.movies!,
+                        list: tmdbcontroller.trendingList,
+                        listName: ListNames.topTrending,
                       ),
                       sectionBody2(tmdbcontroller
                           .trendingList.first.movies!.reversed
@@ -203,7 +209,8 @@ class MainPage extends StatelessWidget {
                       //Popular
                       SectionHead(
                         title: 'Popular',
-                        list: tmdbcontroller.popularList.first.movies!,
+                        list: tmdbcontroller.popularList,
+                        listName: ListNames.popular,
                       ),
                       SectionBody(tmdbcontroller.popularList.first.movies!),
 
@@ -211,7 +218,8 @@ class MainPage extends StatelessWidget {
                       //Top Rated
                       SectionHead(
                         title: 'Top Rated',
-                        list: tmdbcontroller.topRatedList.first.movies!,
+                        list: tmdbcontroller.topRatedList,
+                        listName: ListNames.topRated,
                       ),
                       SectionBody(tmdbcontroller.topRatedList.first.movies!),
 
@@ -219,7 +227,8 @@ class MainPage extends StatelessWidget {
                       //Now Playing
                       SectionHead(
                         title: 'Now Playing',
-                        list: tmdbcontroller.nowPlayingList.first.movies!,
+                        list: tmdbcontroller.nowPlayingList,
+                        listName: ListNames.nowPlaying,
                       ),
                       sectionBody2(
                         tmdbcontroller.nowPlayingList.first.movies!.reversed
@@ -230,11 +239,12 @@ class MainPage extends StatelessWidget {
                       //All Movies
                       SectionHead(
                         title: 'All Movies',
-                        list: tmdbcontroller.allMoviesList.first.movies!,
+                        list: tmdbcontroller.allMoviesList,
+                        listName: ListNames.allMovies,
                       ),
                       AllMovies(
                         asWidget: true,
-                        list: tmdbcontroller.allMoviesList.first.movies!,
+                        list: tmdbcontroller.allMoviesList,
                       ),
                     ]
             ],

@@ -18,6 +18,8 @@ class TMDBController extends GetxController {
   }
 
   RxBool isLoading = false.obs;
+  RxBool isSearching = false.obs;
+  RxBool isFetchingMore = false.obs;
 
   RxList<MovieList> trendingList = <MovieList>[].obs;
   RxList<MovieList> topRatedList = <MovieList>[].obs;
@@ -79,7 +81,9 @@ class TMDBController extends GetxController {
 
   fetchAllMovies() async {
     try {
-      var res = await http.get(Uri.parse(EndPoints.allMovies));
+      isFetchingMore(true);
+      int page = allMoviesList.isEmpty ? 1 : (allMoviesList.last.page! + 1);
+      var res = await http.get(Uri.parse('${EndPoints.allMovies}&page=$page'));
       if (res.statusCode == 200) {
         var body = json.decode(res.body);
         allMoviesList.add(MovieList.fromJson(body));
@@ -99,13 +103,15 @@ class TMDBController extends GetxController {
         colorText: Colors.white,
       );
     }
-
+    isFetchingMore(false);
     update();
   }
 
   fetchTrending() async {
+    isFetchingMore(true);
     try {
-      var res = await http.get(Uri.parse(EndPoints.trending));
+      int page = trendingList.isEmpty ? 1 : trendingList.last.page! + 1;
+      var res = await http.get(Uri.parse('${EndPoints.trending}&page=$page'));
       if (res.statusCode == 200) {
         var body = jsonDecode(res.body);
         trendingList.add(MovieList.fromJson(body));
@@ -125,12 +131,16 @@ class TMDBController extends GetxController {
         colorText: Colors.white,
       );
     }
+    isFetchingMore(false);
     update();
   }
 
   fetchTopRated() async {
     try {
-      var res = await http.get(Uri.parse(EndPoints.topRated));
+      isFetchingMore(true);
+
+      int page = topRatedList.isEmpty ? 1 : topRatedList.last.page! + 1;
+      var res = await http.get(Uri.parse('${EndPoints.topRated}&page=$page'));
       if (res.statusCode == 200) {
         var body = json.decode(res.body);
         topRatedList.add(MovieList.fromJson(body));
@@ -150,12 +160,15 @@ class TMDBController extends GetxController {
         colorText: Colors.white,
       );
     }
+    isFetchingMore(false);
     update();
   }
 
   fetchNowPlaying() async {
     try {
-      var res = await http.get(Uri.parse(EndPoints.nowPlaying));
+      isFetchingMore(true);
+      int page = nowPlayingList.isEmpty ? 1 : nowPlayingList.last.page! + 1;
+      var res = await http.get(Uri.parse('${EndPoints.nowPlaying}&page=$page'));
       if (res.statusCode == 200) {
         var body = json.decode(res.body);
         nowPlayingList.add(MovieList.fromJson(body));
@@ -175,12 +188,15 @@ class TMDBController extends GetxController {
         colorText: Colors.white,
       );
     }
+    isFetchingMore(false);
     update();
   }
 
   fetchPopular() async {
     try {
-      var res = await http.get(Uri.parse(EndPoints.popular));
+      isFetchingMore(true);
+      int page = popularList.isEmpty ? 1 : popularList.last.page! + 1;
+      var res = await http.get(Uri.parse('${EndPoints.popular}&page=$page'));
       if (res.statusCode == 200) {
         var body = json.decode(res.body);
         popularList.add(MovieList.fromJson(body));
@@ -200,12 +216,15 @@ class TMDBController extends GetxController {
         colorText: Colors.white,
       );
     }
+    isFetchingMore(false);
     update();
   }
 
   fetchUpcoming() async {
     try {
-      var res = await http.get(Uri.parse(EndPoints.upcoming));
+      isFetchingMore(true);
+      int page = upcomingList.isEmpty ? 1 : upcomingList.last.page! + 1;
+      var res = await http.get(Uri.parse('${EndPoints.upcoming}&page=$page'));
       if (res.statusCode == 200) {
         var body = json.decode(res.body);
         upcomingList.add(MovieList.fromJson(body));
@@ -225,6 +244,7 @@ class TMDBController extends GetxController {
         colorText: Colors.white,
       );
     }
+    isFetchingMore(false);
     update();
   }
 
@@ -289,8 +309,10 @@ class TMDBController extends GetxController {
 
   fetchRecommendations(id) async {
     try {
-      var res = await http
-          .get(Uri.parse('$baseURL/movie/$id/recommendations?api_key=$apiKey'));
+      isFetchingMore(true);
+      int page = recommendations.isEmpty ? 1 : recommendations.last.page! + 1;
+      var res = await http.get(Uri.parse(
+          '$baseURL/movie/$id/recommendations?api_key=$apiKey&page=$page'));
       if (res.statusCode == 200) {
         var body = json.decode(res.body);
         recommendations.add(MovieList.fromJson(body));
@@ -310,6 +332,7 @@ class TMDBController extends GetxController {
         colorText: Colors.white,
       );
     }
+    isFetchingMore(false);
     update();
   }
 
@@ -386,14 +409,13 @@ class TMDBController extends GetxController {
   }
 
   searchByMovieName(String movieName) async {
-    isLoading(true);
+    isSearching(true);
     searchResults.clear();
     try {
       var res =
           await http.get(Uri.parse('${EndPoints.searchByName}$movieName'));
       if (res.statusCode == 200) {
         var body = jsonDecode(res.body);
-        print(body);
         searchResults.add(MovieList.fromJson(body));
       } else {
         Get.snackbar(
@@ -411,7 +433,7 @@ class TMDBController extends GetxController {
         colorText: Colors.white,
       );
     }
-    isLoading(false);
+    isSearching(false);
     update();
   }
 }

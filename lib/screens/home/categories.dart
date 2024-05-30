@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:movie_app/bindings/fetch_more_binding.dart';
+import 'package:movie_app/controllers/all_movies_controller.dart';
+
 import 'package:movie_app/controllers/db/tmdb_controller.dart';
 
 import '../movies/all_movies.dart';
@@ -55,14 +58,17 @@ class Categories extends GetView<TMDBController> {
               onTap: () async {
                 await controller
                     .getMoviesInGenre(controller.allGenres[index].id)
-                    .then((_) => Get.to(
-                          () => AllMovies(
-                            asWidget: false,
-                            title: controller.allGenres[index].name,
-                            genreId: controller.allGenres[index].id,
-                            list: controller.moviesInGenre.first.movies!,
-                          ),
-                        ));
+                    .then(
+                      (_) => Get.to(
+                        () => AllMovies(
+                          asWidget: false,
+                          title: controller.allGenres[index].name,
+                          genreId: controller.allGenres[index].id,
+                          list: controller.moviesInGenre,
+                        ),
+                        binding: FetchMoreBinding(ListNames.getbyGenre),
+                      ),
+                    );
               },
             ),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
