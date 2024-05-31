@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:movie_app/controllers/all_movies_controller.dart';
+import 'package:movie_app/controllers/infinite_scroll_controller.dart';
 import 'package:movie_app/controllers/db/tmdb_controller.dart';
 import 'package:movie_app/models/movie.dart';
 import 'package:movie_app/widgets/movie/film_card2.dart';
@@ -180,6 +180,10 @@ class MainPage extends StatelessWidget {
                           title: 'Recommendations',
                           list: tmdbcontroller.recommendations,
                           listName: ListNames.recommendations,
+                          movieId: tmdbcontroller.favorites.isEmpty
+                              ? tmdbcontroller
+                                  .topRatedList.first.movies!.first.id
+                              : tmdbcontroller.favorites.last.id,
                         ),
                         sectionBody2(
                             tmdbcontroller.recommendations.first.movies!),
@@ -259,7 +263,15 @@ class MainPage extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       physics: const BouncingScrollPhysics(),
       child: Row(
-        children: list.map((movie) => FilmCard2(movie: movie)).toList(),
+        children: list
+            .map(
+              (movie) => FilmCard2(
+                movie: movie,
+                isFirst: list.first == movie,
+                isLast: list.last == movie,
+              ),
+            )
+            .toList(),
       ),
     );
   }

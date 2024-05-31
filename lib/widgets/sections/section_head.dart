@@ -10,14 +10,17 @@ class SectionHead extends StatelessWidget {
   final bool details;
   final List<MovieList> list;
   final String listName;
+  final int? movieId;
   final void Function()? onTap;
-  const SectionHead(
-      {super.key,
-      required this.title,
-      this.details = false,
-      required this.list,
-      this.onTap,
-      required this.listName});
+  const SectionHead({
+    super.key,
+    required this.title,
+    this.details = false,
+    required this.list,
+    this.onTap,
+    required this.listName,
+    this.movieId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +38,10 @@ class SectionHead extends StatelessWidget {
                 title: title,
                 list: list,
               ),
-              binding: FetchMoreBinding(listName),
+              binding: FetchMoreBinding(
+                listName: listName,
+                movieId: movieId,
+              ),
             );
           },
     );

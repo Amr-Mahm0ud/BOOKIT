@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:movie_app/controllers/all_movies_controller.dart';
+import 'package:movie_app/controllers/infinite_scroll_controller.dart';
 import 'package:movie_app/models/movie.dart';
 
 import '../../controllers/db/tmdb_controller.dart';
@@ -45,30 +45,37 @@ class AllMovies extends GetView<TMDBController> {
                   }),
             ),
             body: genreId != null
-                ? FutureBuilder(
-                    future: controller.getMoviesInGenre(genreId),
-                    builder: (_, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const LinearProgressIndicator();
-                      } else if (controller.moviesInGenre.isEmpty) {
-                        return const LinearProgressIndicator();
-                      }
-                      return ListView.separated(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: Get.size.width * 0.05),
-                          physics: const BouncingScrollPhysics(),
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            return FilmTile(
-                                movie: controller
-                                    .moviesInGenre.first.movies![index]);
-                          },
-                          separatorBuilder: (_, index) {
-                            return const SizedBox(height: 20);
-                          },
-                          itemCount:
-                              controller.moviesInGenre.first.movies!.length);
-                    })
+                ? Obx(
+                    () => SingleChildScrollView(
+                      controller: infiniteScrollController!.scrollController,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: Get.size.width * 0.05),
+                      physics: const BouncingScrollPhysics(),
+                      child: Column(
+                        children: [
+                          ...controller.moviesInGenre.map(
+                            (list) => Column(
+                              children: list.movies!
+                                  .map(
+                                    (movie) => Column(
+                                      children: [
+                                        FilmTile(movie: movie),
+                                        const SizedBox(height: 20),
+                                      ],
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
+                          ),
+                          if (controller.isFetchingMore.value)
+                            const Padding(
+                              padding: EdgeInsets.all(10),
+                              child: CircularProgressIndicator(),
+                            ),
+                        ],
+                      ),
+                    ),
+                  )
                 : Obx(
                     () => SingleChildScrollView(
                       controller: infiniteScrollController!.scrollController,

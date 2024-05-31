@@ -19,7 +19,10 @@ class InfiniteScrollController extends GetxController {
   final TMDBController controller = Get.find<TMDBController>();
 
   final String listName;
-  InfiniteScrollController(this.listName);
+  final int? movieId;
+  final int? genreId;
+  InfiniteScrollController(
+      {required this.listName, this.movieId, this.genreId});
 
   RxDouble offset = 0.0.obs;
 
@@ -53,7 +56,7 @@ class InfiniteScrollController extends GetxController {
           controller.fetchAllMovies();
           return;
         case 'reccomndations':
-          // controller.fetchRecommendations();
+          controller.fetchRecommendations(movieId);
           return;
         case 'upcoming':
           controller.fetchUpcoming();
@@ -71,10 +74,9 @@ class InfiniteScrollController extends GetxController {
           controller.fetchNowPlaying();
           return;
         case 'similar':
-          // controller.();
           return;
         case 'getbyGenre':
-          // controller.getMoviesInGenre();
+          controller.getMoreMoviesInGenre(genreId);
           return;
       }
     }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:movie_app/bindings/fetch_more_binding.dart';
-import 'package:movie_app/controllers/all_movies_controller.dart';
+import 'package:movie_app/controllers/infinite_scroll_controller.dart';
 import 'package:movie_app/controllers/db/movie_controller.dart';
 import 'package:movie_app/controllers/db/tmdb_controller.dart';
 import 'package:movie_app/screens/booking/booking.dart';
@@ -279,13 +279,14 @@ class MovieDetails extends StatelessWidget {
                           list: controller.similarMovies,
                           listName: ListNames.similar,
                           onTap: () {
-                            Get.off(
+                            Get.to(
                                 () => AllMovies(
                                       asWidget: false,
                                       title: 'Similar Movies',
                                       list: controller.similarMovies,
                                     ),
-                                binding: FetchMoreBinding(ListNames.similar));
+                                binding: FetchMoreBinding(
+                                    listName: ListNames.similar));
                           },
                         ),
                         sectionBodyFromDetails(
@@ -302,15 +303,15 @@ class MovieDetails extends StatelessWidget {
                           list: controller.recommendations,
                           listName: ListNames.recommendations,
                           onTap: () {
-                            Get.off(
+                            Get.to(
                               () => AllMovies(
                                 asWidget: false,
                                 title: 'Recommendations',
                                 list: controller.recommendations,
                               ),
                               binding: FetchMoreBinding(
-                                ListNames.recommendations,
-                              ),
+                                  listName: ListNames.recommendations,
+                                  movieId: controller.movie.value.id),
                             );
                           },
                         ),

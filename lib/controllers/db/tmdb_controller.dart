@@ -79,6 +79,35 @@ class TMDBController extends GetxController {
     update();
   }
 
+  getMoreMoviesInGenre(genre) async {
+    try {
+      isFetchingMore(true);
+      int page = allMoviesList.isEmpty ? 1 : (allMoviesList.last.page! + 1);
+      final http.Response res = await http.get(
+          Uri.parse('${EndPoints.allMovies}&with_genres=$genre&page=$page'));
+      if (res.statusCode == 200) {
+        var body = json.decode(res.body);
+        moviesInGenre.add(MovieList.fromJson(body));
+      } else {
+        Get.snackbar(
+          'Error',
+          'Something went wrong',
+          backgroundColor: Get.theme.colorScheme.error.withOpacity(0.5),
+          colorText: Colors.white,
+        );
+      }
+    } catch (error) {
+      Get.snackbar(
+        'Error!',
+        error.toString(),
+        backgroundColor: Get.theme.colorScheme.error.withOpacity(0.5),
+        colorText: Colors.white,
+      );
+    }
+    isFetchingMore(false);
+    update();
+  }
+
   fetchAllMovies() async {
     try {
       isFetchingMore(true);

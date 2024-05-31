@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:movie_app/bindings/fetch_more_binding.dart';
-import 'package:movie_app/controllers/all_movies_controller.dart';
+import 'package:movie_app/controllers/infinite_scroll_controller.dart';
 
 import 'package:movie_app/controllers/db/tmdb_controller.dart';
 
@@ -66,7 +66,10 @@ class Categories extends GetView<TMDBController> {
                           genreId: controller.allGenres[index].id,
                           list: controller.moviesInGenre,
                         ),
-                        binding: FetchMoreBinding(ListNames.getbyGenre),
+                        binding: FetchMoreBinding(
+                          listName: ListNames.getbyGenre,
+                          genreId: controller.allGenres[index].id,
+                        ),
                       ),
                     );
               },

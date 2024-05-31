@@ -10,7 +10,15 @@ import '../../screens/movies/movie_details.dart';
 class FilmCard2 extends StatelessWidget {
   final Movie movie;
   final bool inFavourite;
-  const FilmCard2({super.key, required this.movie, this.inFavourite = false});
+  final bool isFirst;
+  final bool isLast;
+  const FilmCard2({
+    super.key,
+    required this.movie,
+    this.inFavourite = false,
+    this.isFirst = false,
+    this.isLast = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +34,8 @@ class FilmCard2 extends StatelessWidget {
         },
         child: Padding(
           padding: EdgeInsets.only(
-            left: Get.width * 0.05,
-            right: Get.width * 0.05,
+            left: isFirst ? Get.width * 0.05 : Get.width * 0.025,
+            right: isLast ? Get.width * 0.05 : Get.width * 0.025,
             bottom: 25,
           ),
           child: Column(
@@ -55,10 +63,7 @@ class FilmCard2 extends StatelessWidget {
                         gradient: const LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
-                          colors: [
-                            Colors.transparent,
-                            Colors.black54
-                          ],
+                          colors: [Colors.transparent, Colors.black54],
                         ),
                       ),
                       padding: EdgeInsets.all(Get.size.width * 0.05),
