@@ -10,39 +10,33 @@ class Favorites extends GetView<TMDBController> {
   const Favorites({super.key});
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: controller.getFavorites(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
+    return Obx(
+      () {
+        if (controller.isLoading.value) {
           return Center(
             child: Lottie.asset(
               'assets/lotties/loading.json',
               width: Get.width * 0.3,
             ),
           );
+        } else if (controller.favorites.isEmpty &&
+            !controller.isLoading.value) {
+          return Center(
+            child: Text(
+              'You have no favorites',
+              style: Get.textTheme.headlineSmall!
+                  .copyWith(color: Get.textTheme.headlineMedium!.color),
+            ),
+          );
         }
-        return Obx(
-          () {
-            if (controller.favorites.isEmpty &&
-                snapshot.connectionState != ConnectionState.waiting) {
-              return Center(
-                child: Text(
-                  'You have no favorites',
-                  style: Get.textTheme.headlineSmall!
-                      .copyWith(color: Get.textTheme.headlineMedium!.color),
-                ),
-              );
-            }
-            return ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              itemCount: controller.favorites.length,
-              itemBuilder: (_, index) {
-                Movie movie = controller.favorites[index];
-                return FilmCard2(
-                  movie: movie,
-                  inFavourite: true,
-                );
-              },
+        return ListView.builder(
+          physics: const BouncingScrollPhysics(),
+          itemCount: controller.favorites.length,
+          itemBuilder: (_, index) {
+            Movie movie = controller.favorites[index];
+            return FilmCard2(
+              movie: movie,
+              inFavourite: true,
             );
           },
         );

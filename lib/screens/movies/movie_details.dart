@@ -77,6 +77,7 @@ class MovieDetails extends StatelessWidget {
                           ),
                         ),
                       ),
+                      //More Options
                       Positioned(
                         top: Get.height * 0.04,
                         right: Get.width * 0.025,
@@ -130,7 +131,7 @@ class MovieDetails extends StatelessWidget {
                     ],
                   ),
                 ),
-                //tagline, date, votes, rate, backdrop, genres, overview, com, countries & langs
+                //Movie Data
                 Padding(
                   padding: EdgeInsets.symmetric(
                     vertical: Get.width * 0.025,
@@ -156,7 +157,7 @@ class MovieDetails extends StatelessWidget {
                           const SizedBox(width: 15),
                         ],
                       ),
-                      //backdrop
+                      //backdrop,Video
                       if (!controller.movie.value.backdropPath!
                           .contains('null'))
                         AspectRatio(

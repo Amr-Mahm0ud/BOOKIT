@@ -14,7 +14,19 @@ class MovieController extends GetxController {
   @override
   void onInit() {
     getAllData();
+    videoController = YoutubePlayerController(initialVideoId: '');
     super.onInit();
+  }
+
+  @override
+  onClose() {
+    recommendations.close();
+    similarMovies.close();
+    videos.close();
+    movie.close();
+    mainColor.close();
+    isLoading.close();
+    super.onClose();
   }
 
   Rx<Movie> movie = Movie().obs;
@@ -22,8 +34,7 @@ class MovieController extends GetxController {
   RxList<MovieList> similarMovies = <MovieList>[].obs;
   RxList<VideoModel> videos = <VideoModel>[].obs;
 
-  YoutubePlayerController videoController =
-      YoutubePlayerController(initialVideoId: '');
+  late YoutubePlayerController videoController;
 
   Rx<Color> mainColor = Colors.transparent.obs;
 
